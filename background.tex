@@ -1,0 +1,95 @@
+\chapter{Background}
+
+This chapter introduces the mathematical concepts and tools used within this
+thesis. We begin with \emph{persistent homology}, a fundamental tool for
+measuring topological features at different scales. \todo{finish}
+
+\section{Persistent homology}
+
+\emph{Simplicial complexes} are a combinatorial structure used to study topological
+spaces. They are built from simplices, which are the generalization of
+points, line segments, triangles, and higher-dimensional shapes. A simplicial
+complex is a set of simplices that satisfy certain conditions \todo{say which ones}.
+A \emph{filtered} simplicial complex is a collection of simplices
+$(K_\varepsilon)_{\varepsilon \in \R}$ that is indexed by a parameter $\varepsilon$,
+where $K_\varepsilon \subseteq K_{\varepsilon'}$ for $\varepsilon < \varepsilon'$.
+
+A real-valued function $f: X \to \R$ on a topological space $X$ induces a
+filtered simplicial complex by considering the sublevel sets
+\todo{shit definition, talk about triangulation}
+\[
+    K_\varepsilon = \{ x \in X \mid f(x) \leq \varepsilon \}.
+\]
+Such a filtration is called a \emph{sublevelset filtration}.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \small
+        % Axes
+        \draw[->] (0,0) -- (6,0) node[right] {Birth};
+        \draw[->] (0,0) -- (0,6) node[above] {Death};
+        
+        % Grid
+        % \draw[gray!30] (0,0) grid (6,6);
+        
+        % Diagonal
+        \draw[dashed] (0,0) -- (6,6);
+        
+        % Point coords
+        \coordinate (p1) at (1,3);
+        \coordinate (p2) at (2,4);
+        \coordinate (p3) at (3,5);
+        \coordinate (p4) at (1.5,2);
+        
+        % Lines to axes
+        \draw[dashed,gray] (p1) -- (1,0) node[below,black] {$b_1$};
+        \draw[dashed,gray] (p1) -- (0,3) node[left,black] {$d_1$};
+        \draw[dashed,gray] (p2) -- (2,0) node[below,black] {$b_2$};
+        \draw[dashed,gray] (p2) -- (0,4) node[left,black] {$d_2$};
+        \draw[dashed,gray] (p3) -- (3,0) node[below,black] {$b_3$};
+        \draw[dashed,gray] (p3) -- (0,5) node[left,black] {$d_3$};
+        \draw[dashed,gray] (p4) -- (1.5,0) node[below,black] {$b_4$};
+        \draw[dashed,gray] (p4) -- (0,2) node[left,black] {$d_4$};
+
+        % Points
+        \fill (p1) circle (2pt) node[above right] {$p_1$};
+        \fill (p2) circle (2pt) node[above right] {$p_2$};
+        \fill (p3) circle (2pt) node[above right] {$p_3$};
+        \fill (p4) circle (2pt) node[above right] {$p_4$};
+    \end{tikzpicture}
+    \caption{An example of a persistent diagram. A point $p_i$ is born at $b_i$ and dies at $d_i$.}
+    \label{fig:pd}
+\end{figure}
+
+A filtered simplicial complex can be summarized by its \emph{persistent homology},
+which serves as a fundamental tool in TDA that tracks how topological features
+(connected components, voids) appear and disappear as a parameter is
+varied~\cite{edelsbrunner2010computational}. Given a filtered
+simplicial complex $(K_\epsilon)_{\epsilon \in \R}$, persistent homology
+computes pairs $(b_i, d_j)$ where a feature appears at
+$\epsilon = b_i$ (birth) and disappears at $\epsilon = d_i$ (death).
+
+These birth--death pairs can be visualized in a \emph{persistence diagram},
+where each pair is shown as a point in the Euclidean plane. The distance of a
+point from the diagonal indicates the feature's persistence, which is often
+interpreted as a measure of its significance. Figure~\ref{fig:pd} shows an
+example of a persistence diagram.
+
+Two persistence diagrams can be compared using the \emph{bottleneck distance},
+which measures the cost of transforming one diagram into another by
+matching points. Formally, given two persistence diagrams $D_1$ and $D_2$, the
+bottleneck distance is defined as
+\begin{equation}
+    d_b(D_1, D_2) = \inf_{\pi} \max_{p \in D_1} \norm{p - \pi(p)},
+\end{equation}
+where $\pi$ is a bijection between the points in $D_1$ and $D_2$, and
+$\norm{\cdot}$ is the Euclidean distance. \todo{wrong definition, talk about allowed diagonal matching}
+An alternative metric is the \emph{Wasserstein distance}, which generalizes the
+bottleneck distance by computing the $p$-norm of the transport distance \todo{bad way to say this}:
+\begin{equation}
+    d_p(D_1, D_2) = \inf_{\pi} \left( \sum_{p \in D_1} \norm{p - \pi(p)}^p \right)^{1/p}.
+\end{equation}
+
+\section{Stability}
+

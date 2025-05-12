@@ -1,0 +1,41 @@
+% Some commands used in this file
+\newcommand{\package}{\emph}
+
+\chapter{Introduction}
+
+Modern datasets often contain geometric or structural relationships that are
+poorly captured by traditional statistical methods. Topological data analysis
+(TDA) addresses this by computing \textit{persistent homology}, a multiscale
+descriptor of connectivity, holes, and higher-dimensional voids. A critical step
+in TDA is constructing a filtration of topological spaces from data, often via
+real-valued functions that reflect data density.
+
+A natural approach is to define a generalized density function (GDF)
+$f(P, x) : \mathcal{P}(X) \times X \to \R$, where $P$ is a dataset.
+We can then consider the \textit{sublevelset filtration} of $f$ to analyze the
+topological features of $P$ at different scales.
+For example, the nearest-neighbor distance function
+$f(P, x) = \min_{p \in P} d(x, p)$ is a GDF that captures the distance from a
+point $x$ to its nearest point in $P$. The sublevelset filtration of this
+function is precisely the \v{C}ech filtration of $P$, which can be intuitvely
+described as the process of growing balls around each point in $P$.
+The \textit{persistence diagram} of the \v{C}ech filtration is \textit{stable}
+with respect to the Hausdorff distance between datasets, that is
+\begin{equation}
+    d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq d_H(P, Q),
+\end{equation}
+where $d_b$ is the bottleneck distance, a metric on persistence diagrams.
+This stability property is crucial for TDA, as it ensures that small
+perturbations in the data lead to small changes in the persistence diagrams,
+which provides robustness to noise.
+
+A natural question arises: which GDFs yield persistence diagrams that are stable?
+Formally, we say that a GDF $f$ is $c$-\textit{stable} if for all datasets
+$P, Q \subseteq X$,
+\begin{equation}
+    d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq c \cdot d_H(P, Q).
+\end{equation}
+
+\section{Overview}
+
+\todo{}

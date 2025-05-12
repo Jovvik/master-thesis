@@ -1,0 +1,35 @@
+\begin{abstract}
+    Topological data analysis (TDA) often uses density-like functions defined on
+    the ambient space $\R^n$ to infer the underlying topological structure of a
+    dataset $P \subseteq \R^n$. The persistent homology of the sublevelset or
+    superlevelset filtrations induced by these functions captures multi-scale
+    topological features. A key desirable property is \emph{stability}: small
+    perturbations in the dataset result in similarly small changes in the
+    persistence diagrams. A classic example is
+    the nearest-neighbor distance function $f(x) \coloneqq \min_{p\in P} d(x,
+    p)$. The bottleneck distance between persistence diagrams $\dgm_{f(P)}$ and
+    $\dgm_{f(Q)}$ is bounded by the Hausdorff distance $d_H(P, Q)$ between
+    datasets \cite{chazal2013persistencestabilitygeometriccomplexes}:
+    \[d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq d_H(P, Q).\]
+    
+    This thesis investigates \emph{generalized density functions} (GDFs), which are functions
+    $f : \mathcal{P}(X) \times X \to \R$, and the conditions under which
+    they satisfy a stability property of the form
+    \[d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq c \cdot d_H(P, Q)\]
+    for some finite constant $c$.
+
+    We identify several classes of GDFs for which such stability holds,
+    including various generalizations of the nearest-neighbor distance function,
+    Lipschitz functions and Morse functions. Furthermore, we examine the space
+    of stable functions from an algebraic and topological perspective.
+    Additionally, we identify conditions under which operations, such as
+    addition, scaling and taking minima, preserve stability. Finally, we provide
+    examples of generalized density functions for which stability is not
+    preserved by these operations, demonstrating the limitations of combining
+    stable functions.
+    
+    Our work unifies existing stability results with new insights into the
+    properties and limitations of generalized density functions in TDA. These
+    findings offer guidance for design and selection of GDFs, and point towards
+    promising directions for future research.
+\end{abstract}
