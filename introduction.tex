@@ -2,40 +2,103 @@
 \newcommand{\package}{\emph}
 
 \chapter{Introduction}
+\label{chap:introduction}
 
-Modern datasets often contain geometric or structural relationships that are
-poorly captured by traditional statistical methods. Topological data analysis
-(TDA) addresses this by computing \textit{persistent homology}, a multiscale
-descriptor of connectivity, holes, and higher-dimensional voids. A critical step
-in TDA is constructing a filtration of topological spaces from data, often via
-real-valued functions that reflect data density.
+Topological Data Analysis (TDA) provides a robust framework for understanding
+the shape of data. Among its tools is \emph{persistent homology}, which extracts
+topological features across different scales. Traditionally, persistent homology
+is applied to a finite point cloud $P \subseteq X$ through filtrations of
+simplicial complexes built on top of $P$, such as the Vietoris–Rips or \v{C}ech
+complexes. An alternative (though sometimes equivalent) approach involves
+defining a real-valued function $X \to \R$ that encodes the geometry of the
+data, and then computing the persistent homology of its sublevel (or superlevel)
+set filtration. The resulting persistent homology captures topological features
+such as connected components, loops, and voids, and encodes them in a
+persistence diagram, which summarizes their birth and death across the
+filtration.
 
-A natural approach is to define a generalized density function (GDF)
-$f(P, x) : \mathcal{P}(X) \times X \to \R$, where $P$ is a dataset.
-We can then consider the \textit{sublevelset filtration} of $f$ to analyze the
-topological features of $P$ at different scales.
-For example, the nearest-neighbor distance function
-$f(P, x) = \min_{p \in P} d(x, p)$ is a GDF that captures the distance from a
-point $x$ to its nearest point in $P$. The sublevelset filtration of this
-function is precisely the \v{C}ech filtration of $P$, which can be intuitvely
-described as the process of growing balls around each point in $P$.
-The \textit{persistence diagram} of the \v{C}ech filtration is \textit{stable}
-with respect to the Hausdorff distance between datasets, that is
+A classical and widely studied example is the \emph{nearest-neighbor distance
+function},
+\begin{equation}
+    f(P, x) = \min_{p \in P} d(x, p),
+\end{equation}
+where $d$ is a metric on $X$. The homology groups of the sublevel set filtration
+of this function are precisely the homology groups of the \v{C}ech filtration.
+This function satisfies a \emph{stability} property:
 \begin{equation}
     d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq d_H(P, Q),
 \end{equation}
-where $d_b$ is the bottleneck distance, a metric on persistence diagrams.
-This stability property is crucial for TDA, as it ensures that small
-perturbations in the data lead to small changes in the persistence diagrams,
-which provides robustness to noise.
+where $d_b$ is the bottleneck distance between persistence diagrams and $d_H$ is
+the Hausdorff distance between point clouds.
+Stability ensures that small perturbations in the data lead to proportionally
+small changes in the persistence diagrams, guaranteeing that the topological
+features extracted from the data are robust to noise.
 
-A natural question arises: which GDFs yield persistence diagrams that are stable?
-Formally, we say that a GDF $f$ is $c$-\textit{stable} if for all datasets
-$P, Q \subseteq X$,
+However, the nearest-neighbor function is just one of many possible density-like
+functions for TDA. In practice, alternative functions may offer computational
+advantages, better capture intrinsic structure, or incorporate domain knowledge.
+For example, the DTM filtration~\cite{anai2020dtm} modifies the nearest-neighbor
+function to make it more robust to noise and outliers. This motivates the study
+of \emph{generalized density functions}, which are functions of the form
 \begin{equation}
-    d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq c \cdot d_H(P, Q).
+    f(P, x) : \mathcal{P}(X) \times X \to \R.
 \end{equation}
+For a given point cloud $P$, such a function defines a real-valued function
+$f_P: X \to \R$, whose sublevel set filtration can be used to analyze the
+topological features of $P$. We say $f$ is $c$-\emph{stable} if for all point
+clouds $P, Q \subseteq X$ we have
+\begin{equation}
+    d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq c \cdot d_H(P, Q),
+\end{equation}
+where the constant $c$ measures the sensitivity of the persistence diagrams to
+perturbations in the data.
+
+In this thesis, we investigate which functions are stable. We consider the
+following classes of functions:
+\begin{enumerate}
+    \item Functions of the form $f(P, x) = \min_{p \in P} h(d(p, x))$, where $h$
+          is a monotone Lipschitz continuous function. These generalize the
+          classical nearest-neighbor function while preserving stability.
+    \item Further generalization to $f(P, x) = \min_{p \in P} h(p, x)$, where
+          $h$ is a Lipschitz function with respect to $p$.
+    \item Functions $f(P, x)$ that are Lipschitz with respect to point clouds
+          \emph{(PC-Lipschitz)}, where $\mathcal{P}(X)$ is equipped with the
+          Hausdorff distance, and the space of real-valued functions $f_P : X
+          \to \R$ is equipped with the $L_\infty$-norm.
+    \item Finally, we consider Morse functions whose restriction to the critical
+          points is Lipschitz continuous.
+\end{enumerate}
+
+Beyond these classes, we also study when stability is preserved under common
+operations. For example, if two functions are each stable, under what conditions
+is their pointwise minimum or average also stable? We identify sufficient
+conditions and provide concrete counterexamples demonstrating cases where
+stability fails. This analysis shows how more complex stable functions can be
+constructed from simpler ones, and provides insight into the structure of the
+space of stable functions.
+
+Finally, we examine the topological and algebraic properties of the space of
+$c$-stable functions itself. We analyze properties such as convexity,
+contractibility, and closedness, as well as establish a lattice structure on the
+set of $c$-PC-Lipschitz functions.
+
+Taken together, our results contribute to the theoretical foundations of TDA by
+deepening the understanding of stability for generalized density functions. They
+also provide practical guidance for designing stable filtrations.
 
 \section{Overview}
 
-\todo{}
+The remainder of this thesis is organized as follows:
+\begin{itemize}
+    \item Chapter~\ref{chap:background} provides the necessary background on
+        persistent homology, stability, as well as known stability results.
+    \item Chapter~\ref{chap:stable_functions} presents our main contributions:
+        stability theorems for various classes of generalized density functions.
+    \item Chapter~\ref{chap:operations} studies stability under common
+        operations.
+    \item Chapter~\ref{chap:space} explores the properties of the space of
+        $c$-stable functions, including its topological and algebraic
+        structure.
+    \item Chapter~\ref{chap:conclusion} concludes with directions for future
+        work and open questions.
+\end{itemize}

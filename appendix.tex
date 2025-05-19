@@ -1,4 +1,63 @@
-\chapter{Dummy Appendix}
+\chapter{Weighted \v{C}ech complex can be represented as a GDF}
+\label{app:weighted_cech}
 
-You can defer lengthy calculations that would otherwise only interrupt
-the flow of your thesis to an appendix.
+\begin{lemma}
+    For any point cloud $P \subseteq \R^d$, a function $g : P \to \R_{\geq 0}$, and a
+    parameter $q \in [1, \infty)$, the weighted \v{C}ech filtration
+    $V^a_q[P, g]$ is equal to the sublevel set of the generalized density
+    function
+    \begin{equation}
+        f_{g, q}(P, x) = \min_{p \in P} (d(x, p)^q + g(p)^q)^{1/q}.
+    \end{equation}
+\end{lemma}
+
+\begin{proof}
+    Fix $P, g, q$, and $a$. A point $x \in \R^d$ being included in $V^a_q[P, g]$
+    is equivalent to the condition
+    \begin{equation}
+        \exists p \in P : d(x, p) \leq r_p^{(q)}(a).
+    \end{equation}
+    Suppose $a \geq g(p)$. Then, we have two cases:
+    \begin{enumerate}
+        \item $q = \infty$. Then, the condition is equivalent to
+            \begin{equation}
+                \exists p \in P : d(x, p) \leq a.
+            \end{equation}
+            The proposed GDF takes value
+            \begin{equation}
+                f_{g, q}(P, x) = \min_{p \in P} \max(d(x, p), g(p)),
+            \end{equation}
+            and the sublevel set $f^{-1}_{g, q, P}(-\infty, a]$ is precisely
+            \begin{equation}
+                \{x \in \R^d \mid \exists p \in P : \max(d(x, p), g(p)) \leq a\},
+            \end{equation}
+            which, due to $a \geq g(p)$, is the set
+            \begin{equation}
+                \{x \in \R^d \mid \exists p \in P : d(x, p) \leq a\},
+            \end{equation}
+            which is the same as $V^a_\infty[P, g]$.
+        \item $q < \infty$. Then, the condition is equivalent to
+            \begin{equation}
+                \exists p \in P : d(x, p) \leq (a^q - g(p)^q)^{1/q}
+            \end{equation}
+            The proposed GDF takes value
+            \begin{equation}
+                f_{g, q}(P, x) = \min_{p \in P} (d(x, p)^q + g(p)^q)^{1/q},
+            \end{equation}
+            and the sublevel set $f^{-1}_{g, q, P}(-\infty, a]$ is precisely
+            \begin{equation}
+                \{x \in \R^d \mid \exists p \in P : (d(x, p)^q + g(p)^q)^{1/q} \leq a\},
+            \end{equation}
+            which can be seen to be the same with trivial algebraic manipulations:
+            \begin{align}
+                (d(x, p)^q + g(p)^q)^{1/q} & \leq a \\
+                d(x, p)^q + g(p)^q & \leq a^q \\
+                d(x, p)^q & \leq a^q - g(p)^q\\
+                d(x, p) & \leq (a^q - g(p)^q)^{1 / q}
+            \end{align}
+    \end{enumerate}
+
+    Now suppose $a < g(p)$. Then $r_p^{(q)}(a) = - \infty$, and thus the balls
+    contain no points. As $(d(x, p)^q + g(p)^q)^{1/q} \geq g(p) > a$, the sublevel
+    set is also empty.
+\end{proof}

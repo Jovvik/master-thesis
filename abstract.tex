@@ -6,34 +6,34 @@
     topological features. A key desirable property is \emph{stability}: small
     perturbations in the dataset result in similarly small changes in the
     persistence diagrams. A classic example is
-    the nearest-neighbor distance function $f(x) \coloneqq \min_{p\in P} d(x,
+    the nearest-neighbor distance function $f(P, x) \coloneqq \min_{p\in P} d(x,
     p)$, for which the bottleneck distance between persistence diagrams
     $\dgm_{f(P)}$ and $\dgm_{f(Q)}$ is bounded by the Hausdorff distance $d_H(P,
     Q)$ between datasets \cite{chazal2013persistencestabilitygeometriccomplexes}:
     \[d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq d_H(P, Q).\]
     
-    This thesis investigates \emph{generalized density functions} (GDFs), which
-    are functions $f : \mathcal{P}(X) \times X \to \R$, and the conditions under
+    This thesis investigates \emph{generalized density functions}, which are
+    functions $f : \mathcal{P}(X) \times X \to \R$, and the conditions under
     which they satisfy a stability property of the form
     \[d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq c \cdot d_H(P, Q)\]
     for some finite constant $c$.
 
-    The primary contribution of this work are stability theorems for several
+    The primary contributions of this work are stability theorems for several
     classes of generalized density functions. Specifically, we prove stability
     bounds for:
     \begin{itemize}
-        \item Several generalizations of the nearest-neighbor distance function of the form
-              $f(P, x) = \min_{p\in P} h(x, p)$.
-        \item Functons that are Lipschitz continuous with respect to the
-              Hausdorff distance on the space of point clouds.
+        \item Several generalizations of the nearest-neighbor distance function
+            of the form $f(P, x) = \min_{p\in P} h(x, p)$.
+        \item Functions that are Lipschitz continuous with respect to the
+            Hausdorff distance on the space of point clouds.
         \item Morse functions that satisfy a Lipschitz-like condition.
     \end{itemize}
 
-    Beyond these core stability results, we briefly explore the properties of
-    the space of stable functions and investigate how common operations, such as
-    addition and taking minima, affect stability. We identify conditions under
-    which stability is preserved under these operations and provide
-    counterexamples demonstrating cases where it is not.
+    Beyond these core stability results, we explore the properties of the space
+    of stable functions and investigate how common operations, such as addition
+    and taking minima, affect stability. We identify conditions under which
+    stability is preserved under these operations and provide counterexamples
+    demonstrating cases where it is not.
     
     Our findings unify and extend existing stability results, offering practical
     guidance for the selection and design of generalized density functions for
