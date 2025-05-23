@@ -5,56 +5,74 @@
 \label{chap:introduction}
 
 Topological Data Analysis (TDA) provides a robust framework for understanding
-the shape of data. Among its tools is \emph{persistent homology}, which extracts
-topological features across different scales. Traditionally, persistent homology
-is applied to a finite point cloud $P \subseteq X$ through filtrations of
-simplicial complexes built on top of $P$, such as the Vietoris–Rips or \v{C}ech
-complexes. An alternative (though sometimes equivalent) approach involves
-defining a real-valued function $X \to \R$ that encodes the geometry of the
-data, and then computing the persistent homology of its sublevel (or superlevel)
-set filtration. The resulting persistent homology captures topological features
-such as connected components, loops, and voids, and encodes them in a
-persistence diagram, which summarizes their birth and death across the
-filtration.
+the shape of data~\cite{carlsson2021topological}. Among its tools is
+\emph{persistent homology}, which extracts
+topological features across different scales~\cite{boissonnat2018geometric}.
+Traditionally, persistent homology is applied to a finite point cloud $P
+\subseteq \R^d$ through filtrations of simplicial complexes built on top of $P$,
+such as the Vietoris–Rips or \v{C}ech complexes~\cite{chazal2021introduction}.
+An alternative (though sometimes equivalent) approach involves defining a
+real-valued function $\R^d \to \R$ that encodes the geometry of the data, and
+then computing the persistent homology of its sublevel (or superlevel) set
+filtration~\cite{edelsbrunner2010computational}. The resulting persistent
+homology captures topological features such as connected components, loops, and
+voids, and encodes them in a persistence diagram, which summarizes their birth
+and death across the filtration~\cite{chazal2021introduction}.
 
 A classical and widely studied example is the \emph{nearest-neighbor distance
 function},
 \begin{equation}
     f(P, x) = \min_{p \in P} d(x, p),
 \end{equation}
-where $d$ is a metric on $X$. The homology groups of the sublevel set filtration
-of this function are precisely the homology groups of the \v{C}ech filtration.
-This function satisfies a \emph{stability} property:
+where $d$ is a metric on $\R^d$. The sublevel sets of this function are
+homotopy equivalent to the \v{C}ech filtration~\cite{schnider2024introduction},
+a fundamental construction in TDA.  This function satisfies a \emph{stability}
+property~\cite{chazal2013persistencestabilitygeometriccomplexes}:
 \begin{equation}
-    d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq d_H(P, Q),
+    d_b(\dgm(f_P), \dgm(f_Q)) \leq \cdot d_H(P, Q),
 \end{equation}
 where $d_b$ is the bottleneck distance between persistence diagrams and $d_H$ is
 the Hausdorff distance between point clouds.
 Stability ensures that small perturbations in the data lead to proportionally
 small changes in the persistence diagrams, guaranteeing that the topological
-features extracted from the data are robust to noise.
+features extracted from the data are robust to noise~\cite{chazal2021introduction}.
 
 However, the nearest-neighbor function is just one of many possible density-like
-functions for TDA. In practice, alternative functions may offer computational
-advantages, better capture intrinsic structure, or incorporate domain knowledge.
-For example, the DTM filtration~\cite{anai2020dtm} modifies the nearest-neighbor
-function to make it more robust to noise and outliers. This motivates the study
-of \emph{generalized density functions}, which are functions of the form
+functions for
+TDA~\cite{anai2020dtm,hoefgeest2022christoffeldarbouxkerneltopologicaldata,phillips2015geometricinferencekerneldensity}.
+In practice, alternative functions may offer computational
+advantages~\cite{guibas2011witnessed,buchet2014efficientrobustpersistenthomology},
+better capture intrinsic structure~\cite{anai2020dtm}, or incorporate domain
+knowledge~\cite{fractalfract8120731}. For example, the DTM
+filtration~\cite{anai2020dtm} modifies the nearest-neighbor function to make
+it more robust to noise and outliers. This motivates the study of
+\emph{generalized density functions} (GDFs), which are functions of the form
 \begin{equation}
-    f(P, x) : \mathcal{P}(X) \times X \to \R.
+    f(P, x) : \mathcal{P}(\R^d) \times \R^d \to \R.
 \end{equation}
 For a given point cloud $P$, such a function defines a real-valued function
-$f_P: X \to \R$, whose sublevel set filtration can be used to analyze the
-topological features of $P$. We say $f$ is $c$-\emph{stable} if for all point
-clouds $P, Q \subseteq X$ we have
+$f_P: \R^d \to \R$, whose sublevel set filtration can be used to analyze the
+topological features of $P$. We say $f$ is $c$-\emph{stable} if for all finite
+point clouds $P, Q \subseteq \R$ we have
 \begin{equation}
-    d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq c \cdot d_H(P, Q),
+    d_b(\dgm(f_P), \dgm(f_Q)) \leq c \cdot d_H(P, Q),
 \end{equation}
-where the constant $c$ measures the sensitivity of the persistence diagrams to
-perturbations in the data.
+where the \emph{stability constant} $c$ measures the sensitivity of the
+persistence diagrams to perturbations in the data.
 
-In this thesis, we investigate which functions are stable. We consider the
-following classes of functions:
+We limit ourselves to the case where $P$ and $Q$ are finite sets, as known
+stability results for GDFs often hold only in this case, because otherwise the
+functions $f_P$ are not tame, and, consequently, the persistence diagrams
+$\dgm(f_P)$ are not $q$-tame.
+
+We also only consider the space $\R^d$ instead of a general topological space
+for the sake of simplicity, as the various theorems used in this thesis impose
+different conditions on the underlying topological space. An inquisitive reader
+is invited to track down the most general conditions for the various novel
+theorems by keeping track of the theorems used in the proofs.
+
+In this thesis, we primarily investigate which GDFs are
+stable. We prove stability of the following classes of functions:
 \begin{enumerate}
     \item Functions of the form $f(P, x) = \min_{p \in P} h(d(p, x))$, where $h$
           is a monotone Lipschitz continuous function. These generalize the
@@ -62,8 +80,8 @@ following classes of functions:
     \item Further generalization to $f(P, x) = \min_{p \in P} h(p, x)$, where
           $h$ is a Lipschitz function with respect to $p$.
     \item Functions $f(P, x)$ that are Lipschitz with respect to point clouds
-          \emph{(PC-Lipschitz)}, where $\mathcal{P}(X)$ is equipped with the
-          Hausdorff distance, and the space of real-valued functions $f_P : X
+          \emph{(PC-Lipschitz)}, where $\mathcal{P}(\R^d)$ is equipped with the
+          Hausdorff distance, and the space of real-valued functions $f_P : \R^d
           \to \R$ is equipped with the $L_\infty$-norm.
     \item Finally, we consider Morse functions whose restriction to the critical
           points is Lipschitz continuous.
@@ -86,19 +104,6 @@ Taken together, our results contribute to the theoretical foundations of TDA by
 deepening the understanding of stability for generalized density functions. They
 also provide practical guidance for designing stable filtrations.
 
-\section{Overview}
+\todo{this is too similar to the abstract --- add more context?}
 
-The remainder of this thesis is organized as follows:
-\begin{itemize}
-    \item Chapter~\ref{chap:background} provides the necessary background on
-        persistent homology, stability, as well as known stability results.
-    \item Chapter~\ref{chap:stable_functions} presents our main contributions:
-        stability theorems for various classes of generalized density functions.
-    \item Chapter~\ref{chap:operations} studies stability under common
-        operations.
-    \item Chapter~\ref{chap:space} explores the properties of the space of
-        $c$-stable functions, including its topological and algebraic
-        structure.
-    \item Chapter~\ref{chap:conclusion} concludes with directions for future
-        work and open questions.
-\end{itemize}
+\todo{Say something about the choice of $\R^d$ and finite subsets}

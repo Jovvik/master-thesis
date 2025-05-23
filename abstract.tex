@@ -1,21 +1,23 @@
 \begin{abstract}
     Topological data analysis (TDA) often uses density-like functions defined on
-    the ambient space $\R^n$ to infer the underlying topological structure of a
-    dataset $P \subseteq \R^n$. The persistent homology of the sublevelset or
+    the ambient space $\R^d$ to infer the underlying topological structure of a
+    dataset $P \subseteq \R^d$. The persistent homology of the sublevelset or
     superlevelset filtrations induced by these functions captures multi-scale
     topological features. A key desirable property is \emph{stability}: small
     perturbations in the dataset result in similarly small changes in the
-    persistence diagrams. A classic example is
-    the nearest-neighbor distance function $f(P, x) \coloneqq \min_{p\in P} d(x,
-    p)$, for which the bottleneck distance between persistence diagrams
-    $\dgm_{f(P)}$ and $\dgm_{f(Q)}$ is bounded by the Hausdorff distance $d_H(P,
-    Q)$ between datasets \cite{chazal2013persistencestabilitygeometriccomplexes}:
-    \[d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq d_H(P, Q).\]
-    
+    persistence diagrams. A classic example is the nearest-neighbor distance
+    function $f(P, x) \coloneqq \min_{p\in P} d(x, p)$, whose sublevel sets are
+    homotopy equivalent to the \v{C}ech
+    complex~\cite{schnider2024introduction}, for which the bottleneck
+    distance between persistence diagrams $\dgm(f_P)$ and $\dgm(f_Q)$ is
+    bounded by the Hausdorff distance $d_H(P, Q)$ between datasets
+    \cite{chazal2013persistencestabilitygeometriccomplexes}:
+    \[d_b(\dgm(f_P), \dgm(f_Q)) \leq d_H(P, Q).\]
     This thesis investigates \emph{generalized density functions}, which are
-    functions $f : \mathcal{P}(X) \times X \to \R$, and the conditions under
-    which they satisfy a stability property of the form
-    \[d_b(\dgm_{f(P)}, \dgm_{f(Q)}) \leq c \cdot d_H(P, Q)\]
+    functions $f : \mathcal{P}(\R^d) \times \R^d \to \R$, where
+    $\mathcal{P}(\R^d)$ denotes the set of all finite subsets of $\R^d$, and
+    the conditions under which they satisfy a stability property of the form
+    \[d_b(\dgm(f_P), \dgm(f_Q)) \leq c \cdot d_H(P, Q)\]
     for some finite constant $c$.
 
     The primary contributions of this work are stability theorems for several

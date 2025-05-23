@@ -6,23 +6,24 @@ density functions. We briefly review the core concepts of how real-valued
 functions induce filtrations for persistent homology and then focus on
 established stability theorems that serve as a foundation and motivation for
 this work. We assume the reader has a working knowledge of topological data
-analysis, mainly persistent homology.
-
-\section{Generalized density functions and filtrations}
+analysis, mainly persistent homology. Otherwise, a comprehensive introduction to
+the subject is provided in the textbook by Herbert Edelsbrunner and John Harer
+\cite{edelsbrunner2010computational}.
 
 At the heart of this thesis lies the concept of a generalized density function (GDF).
 \begin{definition}[Generalized density function]
-    A generalized density function is a map $f : \mathcal{P}(X) \times X \to \R$,
-    where $\mathcal{P}(X)$ denotes the power set of $X$. For a given point cloud
-    $P \in \mathcal{P}(X)$, a GDF $f$ induces a real-valued function $f_P : X
-    \to \R$ defined by $f_P(x) \coloneqq f(P, x)$.
+    A generalized density function is a map $f : \mathcal{P}(\R^d) \times \R^d
+    \to \R$,
+    where $\mathcal{P}(\R^d)$ denotes the collection of all finite subsets of
+    $\R^d$. For a given point cloud $P \in \mathcal{P}(\R^d)$, a GDF $f$ induces a
+    real-valued function $f_P : \R^d \to \R$ defined by $f_P(x) \coloneqq f(P, x)$.
 \end{definition}
 
 These functions $f_P$ are used to construct \emph{sublevel set filtrations}.
 \begin{definition}[Sublevel set filtration]
-    Given a function $f_P : X \to \R$, its sublevel set at a value $a \in \R$ is
+    Given a function $f_P : \R^d \to \R$, its sublevel set at a value $a \in \R$ is
     \begin{equation}
-        f_P^{-1}(-\infty, a] = \{ x \in X \mid f_P(x) \leq a \}.
+        f_P^{-1}(-\infty, a] = \{ x \in \R^d \mid f_P(x) \leq a \}.
     \end{equation}
     The sublevel set filtration of $g$ is the nested family of sets
     $\{f_P^{-1}(-\infty, a]\}_{a \in \R}$.
@@ -34,13 +35,13 @@ $f_P$ is exactly the sublevel set filtration of the function $-f_P$, and vice
 versa. For the sake of consistency, we will use sublevel set filtrations
 throughout this thesis.
 
-Applying a homology functor $H_k$ to the filtration $\{f_P^{-1}(-\infty, a]\}_{a \in \R}$
+Applying a homology functor $H_k$ to a filtration $\{f_P^{-1}(-\infty, a]\}_{a \in \R}$
 yields a persistence module, which tracks the evolution of topological features
-as the parameter $a$ varies. The \emph{persistence diagram}, denoted $\dgm_k(f_P)$,
-is a multiset of points $(b_i, d_i)$ in the extended plane $\overline{\R}^2$,
-where $b_i$ represents the birth time and $d_i$ the death time of a
-$k$-dimensional feature. An example of a persistence diagram is shown in
-Figure~\ref{fig:pd}.
+as the parameter $a$ varies~\cite{edelsbrunner2010computational}. The
+\emph{persistence diagram}, denoted $\dgm_k(f_P)$, is a multiset of points
+$(b_i, d_i)$ in the extended plane $\overline{\R}^2$, where $b_i$ represents the
+birth time and $d_i$ the death time of a $k$-dimensional feature. An example of
+a persistence diagram is shown in Figure~\ref{fig:pd}.
 
 \begin{figure}
     \centering
@@ -78,7 +79,8 @@ Figure~\ref{fig:pd}.
         \fill (p3) circle (2pt) node[above right] {$p_3$};
         \fill (p4) circle (2pt) node[above right] {$p_4$};
     \end{tikzpicture}
-    \caption{An example of a persistent diagram. A point $p_i$ is born at $b_i$ and dies at $d_i$. The point $p_4$ does not die, so its death time is
+    \caption{An example of a persistence diagram. A point $p_i$ is born at $b_i$
+    and dies at $d_i$. The point $p_4$ does not die, so its death time is
     $\infty$. The dashed line indicates the diagonal $\Delta$, where $b_i = d_i$.}
     \label{fig:pd}
 \end{figure}
@@ -90,8 +92,8 @@ clouds and persistence diagrams. A common metric for point clouds is the
 \emph{Hausdorff distance}, which is also used in the definition of stability of
 the nearest-neighbor distance function.
 \begin{definition}[Hausdorff distance]
-    Given two non-empty sets $P, Q \subseteq X$, where $X$ is a metric space,
-    the Hausdorff distance between $P$ and $Q$ is defined as
+    Given two non-empty sets $P, Q \subseteq \R^d$, where $\R^d$ is a metric
+    space, the Hausdorff distance between $P$ and $Q$ is defined as
     \begin{equation}
         d_H(P, Q) = \max\left\{ \sup_{p \in P} \inf_{q \in Q} d(p, q), \sup_{q \in Q} \inf_{p \in P} d(q, p) \right\}.
     \end{equation}
@@ -107,9 +109,6 @@ neighbor in the other set.
 % This assumption is reasonable in the context of TDA, where we typically work with
 % finite non-empty point clouds.
 
-As the Hausdorff distance requires $X$ to be a metric space, we will assume this
-throughout the thesis.
-
 \begin{definition}[Bottleneck distance]
     Given two persistence diagrams $D_1$ and $D_2$, the bottleneck distance
     between them is defined as
@@ -119,7 +118,7 @@ throughout the thesis.
     where the infimum is taken over all bijections $\pi$ between $D_1$ and
     $D_2$, allowing for the possibility of matching points to the diagonal $\Delta = \{(x, x) \mid x \in \overline{\R}\}$.
 \end{definition}
-The bottleneck distance measures the cost of the ``most expensive'' matching
+The bottleneck distance measures the cost of the ``least expensive'' matching
 between the points of the two diagrams, where the cost is defined as the longest
 edge in the matching.
 
@@ -137,11 +136,11 @@ edge in the matching.
 % The case $p = \infty$ corresponds to the bottleneck distance.
 % \todo{possibly remove, if Wasserstein distance isn't used later}
 
-With these metrics, we can formally define stability for a GDF.
+With these metrics defined, we can formally define stability for a GDF.
 \begin{definition}
-    A generalized density function $f : \mathcal{P}(X) \times X \to \R$ is
+    A generalized density function $f : \mathcal{P}(\R^d) \times \R^d \to \R$ is
     $c$-\emph{stable} if for all non-empty finite point clouds $P, Q \subseteq
-    X$ and all homology dimensions $k \geq 0$, we have
+    \R^d$ and all homology dimensions $k \geq 0$, we have
     \begin{equation}
         d_b(\dgm_k(f_P), \dgm_k(f_Q)) \leq c \cdot d_H(P, Q).
     \end{equation}
@@ -157,8 +156,8 @@ filtrations that can be represented as GDFs.
 \subsection{\v{C}ech filtration}
 As mentioned in Chapter~\ref{chap:introduction}, the \v{C}ech filtration can be
 represented as the sublevel set filtration of the nearest-neighbor distance
-function $f_{\mathrm{dist}}(P, x) \coloneqq \min_{p\in P} d(x, p)$.
-The sublevel sets $f_{\mathrm{dist}, P}^{-1}(-\infty, a]$ are precisely
+function $f(P, x) \coloneqq \min_{p\in P} d(x, p)$.
+The sublevel sets $f_P^{-1}(-\infty, a]$ are precisely
 $\bigcup_{p\in P} B(p, a)$, the union of closed balls of radius $a$ centered at
 the points of $P$. The nerve of this union of balls defines the \v{C}ech
 complex. By the Nerve theorem~\cite{Borsuk1948,leray1945forme}, if $P$ is finite,
@@ -166,10 +165,10 @@ the \v{C}ech complex is homotopy equivalent to the union of balls.
 
 The stability of this construction is a well-known result:
 \begin{theorem}[Stability of the \v{C}ech filtration, \cite{chazal2013persistencestabilitygeometriccomplexes}]
-    Let $f_{\mathrm{dist}, P}(x) \coloneqq \min_{p\in P} d(x, p)$. Then for all finite
-    $P, Q \subseteq \mathcal{P}(X)$ and any dimension $k \geq 0$, we have
+    Let $f_P(x) \coloneqq \min_{p\in P} d(x, p)$. Then for all finite
+    $P, Q \subseteq \mathcal{P}(\R^d)$ and any dimension $k \geq 0$, we have
     \begin{equation}
-        d_b(\dgm_k(f_{\mathrm{dist}, P}), \dgm_k(f_{\mathrm{dist}, Q})) \leq d_H(P, Q).
+        d_b(\dgm_k(f_P), \dgm_k(f_Q)) \leq d_H(P, Q).
     \end{equation}
 \end{theorem}
 Using the terminology of this thesis, we say the nearest-neighbor distance
@@ -181,7 +180,7 @@ The weighted \v{C}ech filtration is a generalization of the \v{C}ech filtration
 used to define the DTM-filtration~\cite{anai2020dtm}.
 
 \begin{definition}[Weighted \v{C}ech filtration]
-    Let $X = \R^d$, $q \in [1, \infty)$, $P \subseteq \R^d$ and
+    Let $q \in [1, \infty)$, $P \subseteq \R^d$ and
     $g : P \to \R_{\geq 0}$. For every $p \in P, a \in \R^+$, we define the
     function $r_p(a)$ to be:
     \begin{equation}
@@ -220,9 +219,10 @@ $(d(x, p)^q + g(p)^q)^{1/q}$ is replaced by $\max(d(x, p), g(p))$.
 A proof of the equivalence of this GDF and the weighted \v{C}ech filtration is
 given in Appendix~\ref{app:weighted_cech}.
 
-If $g$ is Lipschitz continuous, then the weighted \v{C}ech filtration is stable:
+If $g$ is Lipschitz continuous, then the weighted \v{C}ech filtration is
+guaranteed to be stable:
 \begin{theorem}[Stability of the weighted \v{C}ech filtration, \cite{anai2020dtm}]
-    Let $P, Q \subset \R^n$ be compact and $g : P \cup Q \to \R^+$ be a
+    Let $P, Q \subseteq \R^d$ be compact and $g : P \cup Q \to \R^+$ be a
     Lipschitz continuous function with Lipschitz constant $c$. Then for any
     dimension $k \geq 0$, we have
     \begin{equation}
@@ -239,17 +239,165 @@ diagrams of two functions to the $L_\infty$-distance between the functions
 themselves.
 
 \begin{theorem}[Stability of persistence diagrams, \cite{cohen2005stability}]
+    \label{thm:stability_sup_norm}
     Let $X$ be a triangulable space, and $g, h : X \to \R$ be two continuous
-    tame functions. Then for all $k \in \N$, the persistence diagrams of $g$ and
+    tame functions. Then for all $k \geq 0$, the persistence diagrams of $g$ and
     $h$ satisfy
     \begin{equation}
         d_b(\dgm_k(g), \dgm_k(h)) \leq \norm{g - h}_{\infty}.
     \end{equation}
 \end{theorem}
-This theorem can be immediately adapted to the case of GDFs:
+Importantly, this theorem is applicable to the case $X = \R^d$, as the space
+$\R^d$ is triangulable~\cite{moise2013geometric}. We can easily adapt this
+theorem to the case of GDFs:
 \begin{equation}
     d_b(\dgm_k(f_P), \dgm_k(f_Q)) \leq \norm{f_P - f_Q}_{\infty}.
 \end{equation}
 This theorem directly implies that if a GDF $f$ satisfies
 $\norm{f_P - f_Q}_\infty \leq c \cdot d_H(P, Q)$ for some constant $c$, then
 $f$ is $c$-stable. This provides a powerful tool for proving stability of GDFs.
+As an example, we prove 1-stability of the \v{C}ech filtration using this theorem.
+\begin{proof}
+    Let $P, Q \subseteq \R^d$ be two finite point clouds with Hausdorff distance
+    $d = d_H(P, Q)$. Let $x$ be an arbitrary point in $\R^d$ with the nearest
+    point in $P$ denoted by $p$. This implies that $f_{\mathrm{dist}, P}(x) =
+    d(x, p)$.  By the definition of the Hausdorff distance, there exists a point
+    $q' \in Q$ such that $d(p, q') \leq d$. By the triangle inequality, we have
+    \begin{equation}
+        d(x, q') \leq d(x, p) + d(p, q') \leq d(x, p) + d.
+    \end{equation}
+    and thus:
+    \begin{equation}
+        f_{\mathrm{dist}, Q}(x) = \min_{q \in Q} d(x, q) \leq d(x, q') \leq d(x, p) + d = f_{\mathrm{dist}, P}(x) + d.
+    \end{equation}
+    Symmetrically, we can show that $f_{\mathrm{dist}, P}(x) \leq f_{\mathrm{dist}, Q}(x) + d$. Thus, we have
+    \begin{equation}
+        \norm{f_{\mathrm{dist}, P} - f_{\mathrm{dist}, Q}}_\infty \leq d,
+    \end{equation}
+    which implies that $f_{\mathrm{dist}}$ is 1-stable by Theorem~\ref{thm:stability_sup_norm}.
+\end{proof}
+
+\subsection{Stability of functions with interleaved persistence modules}
+
+An alternative approach to show stability is to use the \emph{interleaving
+distance}, which bounds the bottleneck distance not only from above, but also
+from below.
+\begin{definition}[Interleaving of persistence modules]
+    \label{def:interleaving}
+    Two persistence modules $\mathbb{M}$ and $\mathbb{N}$ with $M_a, N_a$ as
+    their respective groups and $m_a^{a'}, n_a^{a'}$ as their homomorphisms
+    are \emph{$\varepsilon$-interleaved}
+    for $\varepsilon \geq 0$ if there exist families of maps $\varphi_a : M_a
+    \to N_{a + \varepsilon}$ and $\psi_a : N_a \to N_{a + \varepsilon}$
+    such that the following diagrams commute for all $a < a'$:
+    \begin{equation*}
+        \begin{tikzcd}
+            M_a \arrow{rr}{m_a^{a'}} \arrow{dr}[swap]{\varphi_a} & & M_{a'} \arrow{dr}{\varphi_{a'}} \\
+            & N_{a + \varepsilon} \arrow{rr}[swap]{n_{a + \varepsilon}^{a' + \varepsilon}} & & N_{a' + \varepsilon}
+        \end{tikzcd}
+        \begin{tikzcd}
+            M_a \arrow{dr}[swap]{\varphi_a} \arrow{rr}{m_a^{a + 2\varepsilon}} && M_{a + 2\varepsilon} \\
+            & N_{a + \varepsilon} \arrow{ur}[swap]{\psi_{a + \varepsilon}}
+        \end{tikzcd}
+    \end{equation*}
+    \begin{equation*}
+        \begin{tikzcd}
+            & M_{a + \varepsilon} \arrow{rr}{n_{a + \varepsilon}^{a' + \varepsilon}} & & M_{a' + \varepsilon} \\
+            N_a \arrow{rr}[swap]{n_a^{a'}} \arrow{ur}{\psi_a} & & N_{a'} \arrow{ur}[swap]{\psi_{a'}}
+        \end{tikzcd}
+        \begin{tikzcd}
+            & M_{a + \varepsilon} \arrow{dr}{\varphi_{a + \varepsilon}} \\
+            N_a \arrow{ur}{\psi_a} \arrow{rr}[swap]{n_a^{a + 2\varepsilon}} && N_{a + 2\varepsilon}
+        \end{tikzcd}
+    \end{equation*}
+\end{definition}
+Note that $\mathbb{M}$ and $\mathbb{N}$ are $0$-interleaved if and only if
+they are isomorphic. The triangular diagrams on the right collapse to diagrams
+that show that $\varphi_t$ and $\psi_t$ are inverses of each other, while
+the trapezoidal diagrams on the left ensure they commute with the linear maps
+$m$ and $n$.
+
+\begin{definition}[Interleaving distance]
+    The interleaving distance between two persistence modules $\mathbb{M}$ and
+    $\mathbb{N}$ is given by:
+    \begin{equation}
+        d_i(\mathbb{M}, \mathbb{N}) = \inf \{\varepsilon \mid \text{$\mathbb{M}$ and $\mathbb{N}$ are $\varepsilon$-interleaved}\}.
+    \end{equation}
+\end{definition}
+
+Finally, the interleaving distance and the bottleneck distance are equal:
+\begin{theorem}[Isometry theorem,~\cite{chazal2013structurestabilitypersistencemodules}]
+    Let $\mathbb{M}, \mathbb{N}$ be $q$-tame persistence modules. Then
+    \begin{equation}
+        d_i(\mathbb{M}, \mathbb{N}) = d_b(\dgm(\mathbb{M}), \dgm(\mathbb{N}))
+    \end{equation}
+\end{theorem}
+
+Additionally, we can define interleaving for filtrations:
+\begin{definition}[Interleaving of filtrations]
+    Let $\mathcal{F}, \mathcal{G}$ be filtrations over $\R$, that is,
+    $\R$-indexed sequence of nested subspaces of some topological space $X$.
+    $\mathcal{F}$ and $\mathcal{G}$ are \emph{$\varepsilon$-interleaved}
+    if there exist families of maps $\varphi_a : F_a \to G_{a + \varepsilon}$
+    and $\psi_a : G_a \to F_{a + \varepsilon}$ such that the same diagrams as in
+    Definition~\ref{def:interleaving} commute up to homotopy.
+\end{definition}
+The interleaving distance between two filtrations is defined the same way as for
+persistence modules. The following lemma shows that the former bounds the latter
+from above:
+\begin{lemma}[\cite{schnider2024introduction}]
+    \label{lem:interleaving_distance}
+    For any two filtrations $\mathcal{F}$ and $\mathcal{G}$ over $\R$, we
+    have
+    \begin{equation}
+        d_i(H_p \mathcal{F}, H_p \mathcal{G}) \leq d_i(\mathcal{F}, \mathcal{G}).
+    \end{equation}
+\end{lemma}
+
+With these results in hand, we can apply the interleaving approach to once again
+prove 1-stability of the \v{C}ech filtration.
+\begin{proof}[\cite{schnider2024introduction}]
+    Let $X$ be a topological space, and $P, Q \subseteq X$ be two finite
+    point clouds with Hausdorff distance $d = d_H(P, Q)$.
+    Recall that the \v{C}ech complex $\check{C}^r(P)$ is homotopy equivalent
+    to the union of the balls $\bigcup_{p \in P} B(p, r)$.
+    Let $x \in B(p, r)$. By the definition of the Hausdorff distance, there exists
+    a point $q \in Q$ such that $d(p, q) \leq d$. Therefore, by the triangle
+    inequality we have
+    \begin{equation}
+        d(x, q) \leq d(x, p) + d(p, q) \leq r + d,
+    \end{equation}
+    which implies that $x \in B(q, r + d)$. This provides an inclusion
+    \begin{equation}
+        \bigcup_{p \in P} B(p, r) \subseteq \bigcup_{q \in Q} B(q, r + d).
+    \end{equation}
+    With these two facts, we see that the following diagram commutes up to
+    homotopy, as all maps are either inclusions or homotopies:
+    \begin{equation}
+        \begin{tikzcd}
+            \check{C}^r(P) \arrow[hook]{r} \arrow[leftrightarrow]{d}{\simeq}
+            & \check{C}^{r + d}(P) \arrow[hook]{r} \arrow[leftrightarrow]{d}{\simeq}
+            & \check{C}^{r + 2d}(P) \arrow[leftrightarrow]{d}{\simeq} \\
+            \bigcup_{p \in P} B(p, r) \arrow[hook]{r} \arrow[hook]{dr}
+            & \bigcup_{p \in P} B(p, r + d) \arrow[hook]{r} \arrow[hook]{dr}
+            & \bigcup_{p \in P} B(p, r + 2d) \\
+            \bigcup_{q \in Q} B(q, r) \arrow[hook]{r} \arrow[hook]{ur}
+            & \bigcup_{q \in Q} B(q, r + d) \arrow[hook]{r} \arrow[hook]{ur}
+            & \bigcup_{q \in Q} B(q, r + 2d) \\
+            \check{C}^r(Q) \arrow[hook]{r} \arrow[leftrightarrow]{u}{\simeq}
+            & \check{C}^{r + d}(Q) \arrow[hook]{r} \arrow[leftrightarrow]{u}{\simeq}
+            & \check{C}^{r + 2d}(Q) \arrow[leftrightarrow]{u}{\simeq}
+        \end{tikzcd}
+    \end{equation}
+    All diagrams that are needed to show that $\check{C}^r$ and $\check{C}^r(Q)$ are
+    $d$-interleaved are included in this diagram, and thus we have
+    \begin{equation}
+        d_i(\check{C}^r(P), \check{C}^r(Q)) \leq d.
+    \end{equation}
+    By Lemma~\ref{lem:interleaving_distance} and the isometry theorem, we have
+    \begin{align}
+        d_b(\dgm_k(\check{C}^r(P)), \dgm_k(\check{C}^r(Q)))
+        & \leq d_i(H_k(\check{C}^r(P)), H_k(\check{C}^r(Q))) \\
+        & \leq d_i(\check{C}^r(P), \check{C}^r(Q)) \leq d.
+    \end{align}
+\end{proof}
