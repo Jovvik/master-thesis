@@ -29,16 +29,20 @@ homotopy equivalent to the \v{C}ech filtration~\cite{schnider2024introduction},
 a fundamental construction in TDA.  This function satisfies a \emph{stability}
 property~\cite{chazal2013persistencestabilitygeometriccomplexes}:
 \begin{equation}
-    d_b(\dgm(f_P), \dgm(f_Q)) \leq \cdot d_H(P, Q),
+    d_b(\dgm(f_P), \dgm(f_Q)) \leq c \cdot d_H(P, Q),
 \end{equation}
 where $d_b$ is the bottleneck distance between persistence diagrams and $d_H$ is
-the Hausdorff distance between point clouds.
-Stability ensures that small perturbations in the data lead to proportionally
-small changes in the persistence diagrams, guaranteeing that the topological
-features extracted from the data are robust to noise~\cite{chazal2021introduction}.
+the Hausdorff distance between point clouds. Stability is not merely a
+theoretical nicety; it is the foundation that provides reliability of
+TDA~\cite{chazal2021introduction}. In real-world applications, where data is
+inevitably noisy or subject to measurement error, an unstable method could
+produce drastically different topological summaries from minor, inconsequential
+variations in the input. A stable GDF ensures that the extracted topological
+features are genuine reflections of the data's underlying structure, rather than
+artifacts of noise or sampling.
 
-However, the nearest-neighbor function is just one of many possible density-like
-functions for
+While the nearest-neighbor function is stable, it is just one of many possible
+density-like functions for
 TDA~\cite{anai2020dtm,hoefgeest2022christoffeldarbouxkerneltopologicaldata,phillips2015geometricinferencekerneldensity}.
 In practice, alternative functions may offer computational
 advantages~\cite{guibas2011witnessed,buchet2014efficientrobustpersistenthomology},
@@ -62,29 +66,45 @@ persistence diagrams to perturbations in the data.
 
 We limit ourselves to the case where $P$ and $Q$ are finite sets, as known
 stability results for GDFs often hold only in this case, because otherwise the
-functions $f_P$ are not tame, and, consequently, the persistence diagrams
+functions $f_P$ often are not tame, and, consequently, the persistence diagrams
 $\dgm(f_P)$ are not $q$-tame.
 
 We also only consider the space $\R^d$ instead of a general topological space
 for the sake of simplicity, as the various theorems used in this thesis impose
-different conditions on the underlying topological space. An inquisitive reader
-is invited to track down the most general conditions for the various novel
-theorems by keeping track of the theorems used in the proofs.
+different conditions on the underlying topological space. The euclidean space
+$\R^d$ was chosen as the lowest common denominator, although many results in
+this thesis hold for more general spaces. An inquisitive reader is invited to
+track down the most general conditions for the various novel theorems by keeping
+track of the theorems used in the proofs.
 
-In this thesis, we primarily investigate which GDFs are
-stable. We prove stability of the following classes of functions:
+In this thesis, we primarily investigate which GDFs are stable. Existing
+stability results, such as those for the \v{C}ech filtration and its weighted
+variants, provide a starting point. This thesis aims to create a more
+comprehensive framework by identifying broader conditions that ensure stability,
+thereby unifying and extending these results. Concretely, we prove stability of
+the following classes of functions:
 \begin{enumerate}
-    \item Functions of the form $f(P, x) = \min_{p \in P} h(d(p, x))$, where $h$
-          is a monotone Lipschitz continuous function. These generalize the
-          classical nearest-neighbor function while preserving stability.
-    \item Further generalization to $f(P, x) = \min_{p \in P} h(p, x)$, where
-          $h$ is a Lipschitz function with respect to $p$.
-    \item Functions $f(P, x)$ that are Lipschitz with respect to point clouds
-          \emph{(PC-Lipschitz)}, where $\mathcal{P}(\R^d)$ is equipped with the
-          Hausdorff distance, and the space of real-valued functions $f_P : \R^d
-          \to \R$ is equipped with the $L_\infty$-norm.
+    \item We begin by examining natural extensions of the nearest-neighbor
+        function, specifically of the form $f(P, x) = \min_{p \in P} h(d(p,
+        x))$, where $h$ is a monotone Lipschitz continuous function. This
+        function allows the balls of the \v{C}ech complex to grow at different
+        rates, although the speed is still the same for all balls at any given
+        $r$.
+    \item This is further extended to $f(P, x) = \min_{p \in P} h(p, x)$, where
+        $h(p, x)$ is a Lipschitz function with respect to $p$. This allows for
+        more general shapes, as well as different growth rates for different
+        points $p$.
+    \item We then investigate a more direct condition: functions $f(P, x)$ that
+        are Lipschitz with respect to point clouds \emph{(PC-Lipschitz)}, where
+        $\mathcal{P}(\R^d)$ is equipped with the Hausdorff distance, and the
+        space of real-valued functions $f_P : \R^d \to \R$ is equipped with the
+        $L_\infty$-norm. This class includes the previous two classes as
+        special cases, and allows for more general functions that are still
+        stable, but may not be represented as a minimum over a set of
+        functions.
     \item Finally, we consider Morse functions whose restriction to the critical
-          points is Lipschitz continuous.
+        points is Lipschitz continuous, which includes some functions that are
+        not Lipschitz continuous in the usual sense, but are still stable.
 \end{enumerate}
 
 Beyond these classes, we also study when stability is preserved under common
@@ -105,5 +125,3 @@ deepening the understanding of stability for generalized density functions. They
 also provide practical guidance for designing stable filtrations.
 
 \todo{this is too similar to the abstract --- add more context?}
-
-\todo{Say something about the choice of $\R^d$ and finite subsets}
