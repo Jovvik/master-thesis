@@ -57,7 +57,7 @@ it more robust to noise and outliers. This motivates the study of
 For a given point cloud $P$, such a function defines a real-valued function
 $f_P: \R^d \to \R$, whose sublevel set filtration can be used to analyze the
 topological features of $P$. We say $f$ is $c$-\emph{stable} if for all finite
-point clouds $P, Q \subseteq \R$ we have
+point clouds $P, Q \subseteq \R^d$ we have
 \begin{equation}
     d_b(\dgm(f_P), \dgm(f_Q)) \leq c \cdot d_H(P, Q),
 \end{equation}
@@ -87,9 +87,9 @@ the following classes of functions:
     \item We begin by examining natural extensions of the nearest-neighbor
         function, specifically of the form $f(P, x) = \min_{p \in P} h(d(p,
         x))$, where $h$ is a monotone Lipschitz continuous function. This
-        function allows the balls of the \v{C}ech complex to grow at different
-        rates, although the speed is still the same for all balls at any given
-        $r$.
+        is a modification of the \v{C}ech complex which allows the balls to grow
+        at non-uniform rates, although it still requires the growth rate to be
+        the same for all points $p \in P$.
     \item This is further extended to $f(P, x) = \min_{p \in P} h(p, x)$, where
         $h(p, x)$ is a Lipschitz function with respect to $p$. This allows for
         more general shapes, as well as different growth rates for different
@@ -102,9 +102,11 @@ the following classes of functions:
         special cases, and allows for more general functions that are still
         stable, but may not be represented as a minimum over a set of
         functions.
-    \item Finally, we consider Morse functions whose restriction to the critical
-        points is Lipschitz continuous, which includes some functions that are
-        not Lipschitz continuous in the usual sense, but are still stable.
+    \item Finally, recognizing that full Lipschitz continuity might be too
+        strong, we consider Morse functions where Lipschitz-like conditions are
+        imposed only on critical values. This aims to capture stability for
+        functions whose may not be Lipschitz continuous globally, but are
+        nonetheless stable.
 \end{enumerate}
 
 Beyond these classes, we also study when stability is preserved under common
@@ -123,5 +125,3 @@ set of $c$-PC-Lipschitz functions.
 Taken together, our results contribute to the theoretical foundations of TDA by
 deepening the understanding of stability for generalized density functions. They
 also provide practical guidance for designing stable filtrations.
-
-\todo{this is too similar to the abstract --- add more context?}

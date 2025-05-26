@@ -1,0 +1,15 @@
+/.vscode/
+/build/
+*.ps
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.log
+*.thm
+*.toc
+*.zip
+*.out
+*.gz
