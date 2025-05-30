@@ -1,2 +1,241 @@
-\chapter{What functions are stable?}
+\chapter{Stable Generalized Density Functions}
 \label{chap:stable_functions}
+
+\todo{wording}
+Chapter~\ref{chap:background} reviewed foundational stability results for GDFs.
+This chapter examines the central question of this thesis: \emph{for which GDFs
+$f(P, x)$ can we guarantee that the sublevel set filtration of $f_P$ is stable?}
+We will explore several classes of GDFs that satisfy stability, ranging from
+simple cases to more complex constructions, and also present examples of
+functions that are not stable.
+
+\section{0-stable generalized density functions}
+
+The simplest class of stable GDFs are those that do not actually depend on the
+input point cloud $P$.
+\begin{definition}[Point Cloud Independent GDF]
+    A GDF $f(P, x)$ is \emph{point cloud independent} if for any two point
+    clouds $P, Q \subseteq \R^d$, we have $f(P, x) = f(Q, x)$ for all
+    $x \in \R^d$.
+\end{definition}
+\todo{rewrite as theorem + proof}
+The sublevel set filtrations of such functions are the same for all point
+clouds, leading to identical persistence diagrams. It is known that the
+bottleneck distance between identical persistence diagrams is
+zero~\cite{edelsbrunner2010computational}, thus the condition for $0$-stability
+is trivially satisfied:
+\begin{equation}
+    d_b(\dgm(f_P), \dgm(f_Q)) = 0 \leq 0 \cdot d_H(P, Q).
+\end{equation}
+
+This class does not include all $0$-stable GDFs, however. Consider the GDF
+$f : \mathcal{P}(\R) \times \R \to \R$ defined by $f(P, x) = x + |P|$. The
+sublevel sets $f_P^{-1}(-\infty, a]$ are exactly the intervals
+$(-\infty, a - |P|]$, which always have exactly one connected component
+that persists indefinitely. Thus, the persistence diagram of $f_P$ contains a
+single point of dimension $0$ born at $-\infty$ that never dies, and is empty
+in higher dimensions. Thus, for any two finite point clouds $P, Q \subseteq \R$,
+the persistence diagrams $\dgm(f_P)$ and $\dgm(f_Q)$ are identical, and we have
+$0$-stability without independence on the point cloud.
+This example also trivially generalizes to $\R^d$ with roots of $f$ forming a
+hyperplane.
+\todo{terrible wording in this whole paragraph}
+\todo{rewrite as lemma + proof}
+
+\section{Point cloud Lipschitz generalized density functions}
+
+A powerful sufficient condition for stability is a form of Lipschitz continuity:
+\begin{definition}[Point Cloud Lipschitz (PC-Lipschitz) GDF]
+    A GDF $f : \mathcal{P}(\R^d) \times \R^d \to \R$ is
+    \emph{$c$-PC Lipschitz} if it is Lipschitz continuous with Lipschitz
+    constant $c$ as a function of type $\mathcal{P}(\R^d) \to (\R^d \to \R)$,
+    where the space of finite point clouds is equipped with the Hausdorff
+    distance, and the space of real-valued functions $f_P : \R^d \to \R$ is
+    equipped with the $L_\infty$-norm.
+    \todo{is ``of type'' the right term here?}
+\end{definition}
+\begin{lemma}
+    \label{lem:pc_lipschitz_stable}
+    If $f$ is a $c$-PC Lipschitz GDF and its induced persistence modules are
+    $q$-tame, then it is $c$-stable.
+\end{lemma}
+\begin{proof}
+    Let $f$ be a $c$-PC Lipschitz GDF. By definition, for any two finite point
+    clouds $P, Q \subseteq \R^d$, we have
+    \begin{align}
+        \frac{\norm{f_P - f_Q}_\infty}{d_H(P, Q)} & \leq c \\
+        \norm{f_P - f_Q}_\infty & \leq c \cdot d_H(P, Q).
+    \end{align}
+    By Theorem~\ref{thm:stability_sup_norm}, the bottleneck distance between the
+    persistence diagrams $\dgm(f_P)$ and $\dgm(f_Q)$ is bounded by the
+    $L_\infty$-norm of the difference of the functions $f_P$ and $f_Q$.
+    Combining these two inequalities, we obtain:
+    \begin{equation}
+        d_b(\dgm(f_P), \dgm(f_Q)) \leq \norm{f_P - f_Q}_\infty \leq c \cdot d_H(P, Q),
+    \end{equation}
+    which shows that $f$ is $c$-stable.
+\end{proof}
+While this lemma is a straightforward consequence of
+Theorem~\ref{thm:stability_sup_norm}, it is nonetheless a powerful result.
+To illustrate this, we apply it in the next sections.
+
+\section{Weighted \v{C}ech filtration}
+
+The stability of the weighted \v{C}ech filtration (and thus DTM-filtrations) was
+stated in Theorem~\ref{thm:weighted_cech_stability}. We provide a more direct
+proof of this result than in the original paper~\cite{anai2020dtm} by showing
+that the corresponding GDF is PC-Lipschitz.
+
+\begin{theorem}
+    The GDF
+    \begin{equation}
+        f_{g, q}(P, x) = \min_{p \in P} (d(x, p)^{q} + g(p)^{q})^{1/q}
+    \end{equation}
+    for the weighted \v{C}ech filtration is $d$-stable with
+    $d = (1 + c^q)^{1/q}$, where $c$ is the Lipschitz constant of the
+    function $g : \R^d \to \R^+$.
+\end{theorem}
+\begin{proof}
+    Let $P, Q \subseteq \R^d$ be two finite point clouds with Hausdorff distance
+    $d_H(P, Q)$. Similarly to the proof of \v{C}ech stability using
+    Theorem~\ref{thm:stability_sup_norm}, fix $x \in \R^d$ and let the minimum
+    over $P$ be attained at $p \in P$. This implies that
+    \begin{equation}
+        \label{eq:stable_gdf_min}
+        f_{g, q}(P, x) = (d(x, p)^q + g(p)^q)^{1/q}.
+    \end{equation}
+    By the definition of Hausdorff distance, there exists a point $q' \in Q$
+    such that $d(p, q') \leq d_H(P, Q)$, which implies that
+    \begin{equation}
+        d(x, q') \leq d(x, p) + d(p, q') \leq d(x, p) + d_H(P, Q).
+    \end{equation}
+    By monotonicity of~\eqref{eq:stable_gdf_min} with respect to $d(x, p)$ and
+    $g(p)$, we have
+    \begin{align}
+        f_{g, q}(Q, x)
+        & = \min_{q'' \in Q} (d(x, q'')^q + g(q'')^q)^{1/q} \\
+        & \leq (d(x, q')^q + g(q')^q)^{1/q} \\
+        & \leq ((d(x, p) + d_H(P, Q))^q + g(q')^q)^{1/q} \\
+        & \leq ((d(x, p) + d_H(P, Q))^q + (g(p) + c \cdot d_H(P, Q))^q)^{1/q} \\
+        & = \norm{(d(x, p) + d_H(P, Q), g(p) + c \cdot d_H(P, Q))}_q.
+    \end{align}
+    Comparing the values of $f_{g, q}(P, x)$ and $f_{g, q}(Q, x)$, we have
+    \begin{align}
+        & f_{g, q}(Q, x) - f_{g, q}(P, x) \notag \\
+        & \leq \norm{(d(x, p) + d_H(P, Q), g(p) + c \cdot d_H(P, Q))}_q - \norm{(d(x, p), g(p))}_q \\
+        & \leq \norm{(d(x, p) + d_H(P, Q) - d(x, p), g(p) + c \cdot d_H(P, Q) - g(p))}_q \\
+        & = \norm{(d_H(P, Q), c \cdot d_H(P, Q))}_q,
+    \end{align}
+    and by the same reasoning, we have
+    \begin{equation}
+        f_{g, q}(P, x) - f_{g, q}(Q, x) \leq \norm{(d_H(P, Q), c \cdot d_H(P, Q))}_q,
+    \end{equation}
+    which combined gives us
+    \begin{align}
+        \norm{f_{g, q}(P, \cdot) - f_{g, q}(Q, \cdot)}_\infty
+        & = \sup_{x \in \R^d} |f_{g, q}(P, x) - f_{g, q}(Q, x)| \\
+        & \leq \norm{(d_H(P, Q), c \cdot d_H(P, Q))}_q \\
+        & = d_H(P, Q) \cdot \norm{(1, c)}_q \\
+        & = d_H(P, Q) \cdot (1 + c^q)^{1/q},
+    \end{align}
+    which implies that
+    \begin{equation}
+        \norm{f_{g, q}(P, \cdot) - f_{g, q}(Q, \cdot)}_\infty \leq d_H(P, Q) \cdot (1 + c^q)^{1/q},
+    \end{equation}
+    which is exactly the condition for $d$-PC Lipschitz continuity with $d = (1 + c^q)^{1/q}$.
+
+    As it has been already shown in (\cite{anai2020dtm}, Proposition 3.1),
+    the induced persistence modules of the weighted \v{C}ech filtration are
+    pointwise finite dimensional for finite point clouds $P$, which implies
+    that they are $q$-tame. Thus, by Lemma~\ref{lem:pc_lipschitz_stable}, the
+    weighted \v{C}ech filtration is $d$-stable with $d = (1 + c^q)^{1/q}$.
+\end{proof}
+
+\section{Generalized \v{C}ech filtrations}
+
+The nearest neighbor distance function $f(P, x) = \min_{p \in P} d(x, p)$ can be
+seen as taking a minimum over a set of functions $h_p(x) = d(x, p)$, each
+centered around a point $p \in P$. We can generalize this to
+$f(P, x) = \min_{p \in P} h(x, p)$, where $h(x, p) : \R^d \times \R^d \to \R$ is
+a more general ``kernel'' function. We call such GDFs \emph{generalized \v{C}ech
+filtrations}. The stability of such GDFs depends on the properties of the kernel
+$h$.
+
+\subsection{Isotropic, monotone and Lipschitz kernels}
+
+Borrowing terminology from the field of kernel methods, we call a kernel
+\emph{isotropic}
+if it is only a function of the distance between $x$ and $p$
+\cite{genton2001classes}:
+\begin{definition}[Isotropic kernel]
+    A kernel $h : \R^d \times \R^d \to \R$ is \emph{isotropic} if there exists a
+    function $k : \R_+ \to \R$ such that $h(x, p) = k(d(x, p))$ for all
+    $x, p \in \R^d$.
+\end{definition}
+Such kernels correspond to \v{C}ech filtrations where the radius of the growing
+balls grows with the same rate for each point $p \in P$, but that rate changes
+non-uniformly.
+
+The generalized \v{C}ech filtration is stable if the kernel $h$ is isotropic,
+monotone and Lipschitz continuous:
+\begin{theorem}
+    Let $h : \R^d \times \R^d \to \R$ be a kernel that is isotropic, monotone
+    and Lipschitz continuous. Then the generalized \v{C}ech filtration using $h$
+    is $c$-stable with $c$ being the Lipschitz constant of $h$.
+\end{theorem}
+\begin{proof}
+    We want to show that the corresponding GDF is $c$-PC Lipschitz. Let $P, Q
+    \subseteq \R^d$ be two finite point clouds. As in the previous proof, we
+    fix a point $x \in \R^d$ and let the minimum over $P$ be attained at
+    $p \in P$. Then we have $q' \in Q$ such that $d(p, q') \leq d_H(P, Q)$.
+    \begin{align}
+        f(Q, x) & = \min_{q \in Q} k(d(x, q)) \\
+        & \leq k(d(x, q')) \\
+        & \leq k(d(x, p) + d(p, q')) \\
+        & \leq k(d(x, p) + d_H(P, Q)) \\
+        & \leq k(d(x, p)) + c \cdot d_H(P, Q) \\
+        & = f(P, x) + c \cdot d_H(P, Q),
+    \end{align}
+    and by the same reasoning, we have
+    \begin{equation}
+        f(P, x) \leq f(Q, x) + c \cdot d_H(P, Q).
+    \end{equation}
+    Combining these inequalities, we obtain
+    \begin{align}
+        \norm{f(P, \cdot) - f(Q, \cdot)}_\infty
+        & = \sup_{x \in \R^d} |f(P, x) - f(Q, x)| \\
+        & \leq c \cdot d_H(P, Q).
+    \end{align}
+
+    The induced persistence modules of $f(P, x)$ are $q$-tame by the same
+    reasoning as in the proof of Lemma~\ref{lem:tameness_pfd}. Therefore, by
+    Lemma~\ref{lem:pc_lipschitz_stable}, the generalized \v{C}ech
+    filtration using $h$ is $c$-stable.
+\end{proof}
+
+\subsection{Kernels Lipschitz in $p$}
+
+More generally, consider $f(P, x) = \min_{p \in P} h(x, p)$ where the kernel
+$h(x, p)$ is $c$-Lipschitz with respect to its second argument $p$, for any
+fixed $x$:
+\begin{equation}
+    |h(x, p_1) - h(x, p_2)| \leq c \cdot d(p_1, p_2).
+\end{equation}
+Such kernels correspond to generalized \v{C}ech filtrations where the standard
+process of growing balls around points $p \in P$ is modified significantly;
+the growing shapes may not be symmetric, connected, grow at the same rate for
+different $p \in P$ or even include the point $p$ itself. The only restriction
+imposed by Lipschitzness of the kernel is that as a point $p$ moves, the shape
+changes in a controlled manner. Surprisingly, even this weak condition together
+with a $q$-tameness condition is sufficient to guarantee stability of the
+generalized \v{C}ech filtration.
+\todo{rephrase this paragraph, explain more formally that ``shapes'' are just the sublevel sets}
+\begin{theorem}
+    Let $h : \R^d \times \R^d \to \R$ be a kernel that is Lipschitz continuous
+    with respect to its second argument with Lipschitz constant $c$. Then the
+    generalized \v{C}ech filtration using $h$ is $c$-stable if the induced
+    persistence modules are $q$-tame.
+\end{theorem}
+\begin{proof}
+    \todo{}
+\end{proof}

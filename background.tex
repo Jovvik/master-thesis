@@ -85,6 +85,53 @@ a persistence diagram is shown in Figure~\ref{fig:pd}.
     \label{fig:pd}
 \end{figure}
 
+\section{Tameness}
+\todo{wording in this section}
+
+Many known stability results outlined in
+Section~\ref{sec:known_stability_results} as well as the novel results in this
+thesis require the involved persistence modules to be \emph{$q$-tame}.
+\begin{definition}[$q$-tame persistence module,~\cite{chazal2013structurestabilitypersistencemodules}]
+    A persistence module $\mathbb{M}$ with vector spaces $M_a$ and linear maps
+    $m_a^b: M_a \to M_b$ is \emph{$q$-tame} if $m_a^b$ is of finite rank for all
+    $a < b$.
+\end{definition}
+
+$q$-tameness is a generalization of the following notion:
+\begin{definition}[Pointwise finite-dimensional persistence module]
+    A persistence module $\mathbb{M}$ is \emph{pointwise finite-dimensional
+    (PFD)} if for every $a \in \R$, the vector space $M_a$ is
+    finite-dimensional.
+\end{definition}
+\begin{lemma}[\cite{chazal2013structurestabilitypersistencemodules}]
+    \label{lem:tameness_pfd}
+    If a persistence module is PFD, then it is $q$-tame.
+\end{lemma}
+
+The following theorems can be used to prove $q$-tameness of persistence modules
+induced by GDFs.
+\begin{theorem}[\cite{cagliari2010finitenessrankinvariantsmultidimensional}]
+    Let $X$ be a realisation of a finite complex, and let $f : X \to \R$ be a
+    continuous function. Then the persistence module induced by sublevel sets of
+    $f$ is $q$-tame.
+\end{theorem}
+While this theorem is powerful, it is of limited use in this thesis, as we
+consider functions $f_P : \R^d \to \R$, and no triangulation of $\R^d$ is
+finite, as $\R^d$ is not compact. This condition is relaxed in the following
+theorem:
+\begin{theorem}[\cite{chazal2013structurestabilitypersistencemodules}, Corollary 3.34]
+    \label{thm:tameness_condition}
+    Let $X$ be a realisation of a \emph{locally} finite complex, and let
+    $f : X \to \R$ be a continuous function which is bounded below and
+    the preimage $f^{-1}(K)$ of every compact set $K \subseteq \R$ is compact.
+    Then the persistence module induced by sublevel sets of $f$ is $q$-tame.
+\end{theorem}
+This theorem is applicable to $\R^d$, as it admits a locally finite
+triangulation~\cite{grafakos2008classical}. The condition that the preimage of
+every compact set is compact, also known as \emph{properness}, is required to
+remove pathological functions such as the sine function, whose sublevel sets
+$\sin^{-1}(-\infty, a]$ have infinite-dimensional homology for all $a \in (-1, 1)$.
+
 \section{Quantifying stability}
 
 To formalize the notion of stability, we need metrics to compare both point
@@ -149,6 +196,7 @@ With these metrics defined, we can formally define stability for a GDF.
 \end{definition}
 
 \section{Known stability results}
+\label{sec:known_stability_results}
 
 This section reviews the known stability results for GDFs and simplicial
 filtrations that can be represented as GDFs.
@@ -156,7 +204,7 @@ filtrations that can be represented as GDFs.
 \subsection{\v{C}ech filtration}
 As mentioned in Chapter~\ref{chap:introduction}, the \v{C}ech filtration can be
 represented as the sublevel set filtration of the nearest-neighbor distance
-function $f(P, x) \coloneqq \min_{p\in P} d(x, p)$.
+function $f_{\mathrm{dist}}(P, x) \coloneqq \min_{p\in P} d(x, p)$.
 The sublevel sets $f_P^{-1}(-\infty, a]$ are precisely
 $\bigcup_{p\in P} B(p, a)$, the union of closed balls of radius $a$ centered at
 the points of $P$. The nerve of this union of balls defines the \v{C}ech
@@ -222,11 +270,12 @@ given in Appendix~\ref{app:weighted_cech}.
 If $g$ is Lipschitz continuous, then the weighted \v{C}ech filtration is
 guaranteed to be stable:
 \begin{theorem}[Stability of the weighted \v{C}ech filtration, \cite{anai2020dtm}]
+    \label{thm:weighted_cech_stability}
     Let $P, Q \subseteq \R^d$ be compact and $g : P \cup Q \to \R^+$ be a
     Lipschitz continuous function with Lipschitz constant $c$. Then for any
     dimension $k \geq 0$, we have
     \begin{equation}
-        d_b(\dgm_k(V^a_q[P, g]), \dgm_k(V^a_q[Q, g])) \leq (1 + c^q)^{1/q} \cdot d_H(P, Q),
+        d_b(\dgm_k(V^a_q[P, g]), \dgm_k(V^a_q[Q, g])) \leq (1 + c^q)^{1/q} \cdot d_H(P, Q).
     \end{equation}
 \end{theorem}
 This theorem immediately implies that the corresponding GDF
@@ -247,6 +296,12 @@ themselves.
         d_b(\dgm_k(g), \dgm_k(h)) \leq \norm{g - h}_{\infty}.
     \end{equation}
 \end{theorem}
+\begin{remark}
+    This theorem also holds when $g$ and $h$ are not necessairly tame, as long
+    as the resulting persistence modules are
+    $q$-tame~\cite{chazal2013structurestabilitypersistencemodules}.
+\end{remark}
+
 Importantly, this theorem is applicable to the case $X = \R^d$, as the space
 $\R^d$ is triangulable~\cite{moise2013geometric}. We can easily adapt this
 theorem to the case of GDFs:
@@ -256,7 +311,23 @@ theorem to the case of GDFs:
 This theorem directly implies that if a GDF $f$ satisfies
 $\norm{f_P - f_Q}_\infty \leq c \cdot d_H(P, Q)$ for some constant $c$, then
 $f$ is $c$-stable. This provides a powerful tool for proving stability of GDFs.
-As an example, we prove 1-stability of the \v{C}ech filtration using this theorem.
+As an example, we prove 1-stability of nearest neighbor distance function using
+this theorem. To do so, we first need to show the following lemma:
+\begin{lemma}
+    \label{lem:cech_tame}
+    The persistence modules induced by the nearest-neighbor distance function
+    $f_{\mathrm{dist}}(P, x)$ are $q$-tame.
+\end{lemma}
+\begin{proof}
+    The \v{C}ech filtration $\check{C}(P)$ is a filtration of a finite
+    simplicial complex if $P$ is finite, and its persistence modules
+    $H_k(\check{C}(P))$ are thus pointwise finite-dimensional. The sublevel set
+    filtration induced by $f_{\mathrm{dist}}$ is homotopy equivalent to
+    $\check{C}(P)$~\cite{schnider2024introduction}, which implies that the
+    persistence modules corresponding to $f_{\mathrm{dist}}$ are also PFD, which
+    implies $q$-tameness by Lemma~\ref{lem:tameness_pfd}.
+\end{proof}
+Now we can prove the stability of the nearest-neighbor distance function:
 \begin{proof}
     Let $P, Q \subseteq \R^d$ be two finite point clouds with Hausdorff distance
     $d = d_H(P, Q)$. Let $x$ be an arbitrary point in $\R^d$ with the nearest
@@ -270,11 +341,13 @@ As an example, we prove 1-stability of the \v{C}ech filtration using this theore
     \begin{equation}
         f_{\mathrm{dist}, Q}(x) = \min_{q \in Q} d(x, q) \leq d(x, q') \leq d(x, p) + d = f_{\mathrm{dist}, P}(x) + d.
     \end{equation}
-    Symmetrically, we can show that $f_{\mathrm{dist}, P}(x) \leq f_{\mathrm{dist}, Q}(x) + d$. Thus, we have
+    We can show that $f_{\mathrm{dist}, P}(x) \leq f_{\mathrm{dist}, Q}(x) + d$
+    by the same reasoning. Thus, we have
     \begin{equation}
         \norm{f_{\mathrm{dist}, P} - f_{\mathrm{dist}, Q}}_\infty \leq d,
     \end{equation}
-    which implies that $f_{\mathrm{dist}}$ is 1-stable by Theorem~\ref{thm:stability_sup_norm}.
+    which implies that $f_{\mathrm{dist}}$ is 1-stable by
+    Theorem~\ref{thm:stability_sup_norm} and Lemma~\ref{lem:cech_tame}.
 \end{proof}
 
 \subsection{Stability of functions with interleaved persistence modules}
@@ -285,8 +358,8 @@ from below.
 \begin{definition}[Interleaving of persistence modules]
     \label{def:interleaving}
     Two persistence modules $\mathbb{M}$ and $\mathbb{N}$ with $M_a, N_a$ as
-    their respective groups and $m_a^{a'}, n_a^{a'}$ as their homomorphisms
-    are \emph{$\varepsilon$-interleaved}
+    their respective vector spaces and $m_a^{a'}, n_a^{a'}$ as their
+    homomorphisms are \emph{$\varepsilon$-interleaved}
     for $\varepsilon \geq 0$ if there exist families of maps $\varphi_a : M_a
     \to N_{a + \varepsilon}$ and $\psi_a : N_a \to N_{a + \varepsilon}$
     such that the following diagrams commute for all $a < a'$:
@@ -328,9 +401,10 @@ $m$ and $n$.
 Finally, the interleaving distance and the bottleneck distance are equal under a
 mild tameness condition:
 \begin{theorem}[Isometry theorem,~\cite{chazal2013structurestabilitypersistencemodules}]
+    \label{thm:isometry}
     Let $\mathbb{M}, \mathbb{N}$ be $q$-tame persistence modules. Then
     \begin{equation}
-        d_i(\mathbb{M}, \mathbb{N}) = d_b(\dgm(\mathbb{M}), \dgm(\mathbb{N}))
+        d_i(\mathbb{M}, \mathbb{N}) = d_b(\dgm(\mathbb{M}), \dgm(\mathbb{N})).
     \end{equation}
 \end{theorem}
 
@@ -393,13 +467,14 @@ prove 1-stability of the \v{C}ech filtration.
     All diagrams that are needed to show that $\check{C}^r$ and $\check{C}^r(Q)$ are
     $d$-interleaved are included in this diagram, and thus we have
     \begin{equation}
-        d_i(\check{C}^r(P), \check{C}^r(Q)) \leq d.
+        d_i(\check{C}(P), \check{C}(Q)) \leq d.
     \end{equation}
-    By Lemma~\ref{lem:interleaving_distance} and the isometry theorem, we have
+    By Lemma~\ref{lem:cech_tame} and Theorem~\ref{thm:isometry}, as well as
+    Lemma~\ref{lem:interleaving_distance}, we have
     \begin{align}
-        d_b(\dgm_k(\check{C}^r(P)), \dgm_k(\check{C}^r(Q)))
-        & \leq d_i(H_k(\check{C}^r(P)), H_k(\check{C}^r(Q))) \\
-        & \leq d_i(\check{C}^r(P), \check{C}^r(Q)) \\
+        d_b(\dgm_k(\check{C}(P)), \dgm_k(\check{C}(Q)))
+        & \leq d_i(H_k(\check{C}(P)), H_k(\check{C}(Q))) \\
+        & \leq d_i(\check{C}(P), \check{C}(Q)) \\
         & \leq d.
     \end{align}
 \end{proof}
