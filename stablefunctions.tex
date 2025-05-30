@@ -237,5 +237,116 @@ generalized \v{C}ech filtration.
     persistence modules are $q$-tame.
 \end{theorem}
 \begin{proof}
+    Similarly to previous proofs, fix $x \in \R^d$ and $p \in P$.
+    Then we have $q' \in Q$ such that $d(p, q') \leq d_H(P, Q)$.
+    By Lipschitzness of $h$, we have
+    \begin{align}
+        |h(x, q') - h(x, p)| & \leq c \cdot d(q', p) \leq c \cdot d_H(P, Q) \\
+        f(Q, x) \leq h(x, q') & \leq c \cdot d_H(P, Q) + h(x, p),
+    \end{align}
+    and as this holds for any $p \in P$, we have
+    \begin{align}
+        f(Q, x) & \leq c \cdot d_H(P, Q) + f(P, x) \\
+        f(Q, x) - f(P, x) & \leq c \cdot d_H(P, Q).
+    \end{align}
+    By the same reasoning, we have the same with $P$ and $Q$ swapped,
+    and combining the two inequalities, we obtain
+    \begin{equation}
+        |f(P, x) - f(Q, x)| \leq c \cdot d_H(P, Q)
+    \end{equation}
+    for any $x$, which by Lemma~\ref{lem:pc_lipschitz_stable} implies that
+    $f$ is $c$-stable.
+\end{proof}
+This is a generalization of the previous theorem, as any isotropic, monotone and
+Lipschitz kernel is also Lipschitz in $p$, because the composition of a
+$c$-Lipschitz function $k$ with the distance function is also
+$c$-Lipschitz~\cite{weaver2018lipschitz}.
+\todo{reword, sentence too long}
+
+The condition that the induced persistence modules are $q$-tame is opaque
+\todo{better word?}, as it is not immediately clear how to check it for a
+given kernel $h$. In the following lemma, we provide a sufficient condition
+for this.
+\begin{lemma}
+    If the kernel $h : \R^d \times \R^d \to \R$ is continuous with respect to
+    its first argument $x$, bounded below and proper for any fixed $p \in P$,
+    then the induced persistence modules are $q$-tame.
+\end{lemma}
+\begin{proof}
+    To use Theorem~\ref{thm:tameness_condition}, we need to show that:
+    \begin{enumerate}
+        \item $f_P$ is continuous: a minimum of a finite set of continuous
+            functions is continuous, thus $f_P$ is continuous.
+        \item $f_P$ is bounded below: as $h(x, p)$ is bounded below for any
+            fixed $p \in P$, the minimum over a finite set of such functions
+            is also bounded below.
+        \item $f_P$ is proper: a function is proper if and only if for every
+        sequence $\{x_i\}$ that escapes to infinity, the sequence
+        $\{f_P(x_i)\}$ also escapes to infinity~(\cite{lee2003smooth}, Proposition~2.17).
+        As every $h(x, p)$ is proper for any fixed $p \in P$, for any
+        sequence $\{x_i\}$ that escapes to infinity, $\{h(x_i, p)\}$ also
+        escapes to infinity. The sequence $\{f_P(x_i)\} = \{\min_p h(x_i, p)\}$
+        also escapes to infinity, proving that $f_P$ is proper.
+    \end{enumerate}
+\end{proof}
+
+\subsection{Kernels depending on the point cloud}
+
+A further generalization of the previous class of GDFs is to allow the kernel
+to depend on the point cloud $P$ as well, i.e.,
+\begin{equation}
+    f(P, x) = \min_{p \in P} h(x, p, P).
+\end{equation}
+An example could be a distance metric defined by locally estimated covariance,
+leading to growing ellipses whose shape adapts to the local density of $P$. We
+prove two theorems that guarantee stability of such GDFs.
+\begin{theorem}
+    Let $h : \R^d \times \R^d \times \mathcal{P}(\R^d) \to \R$ be a kernel that
+    is $c$-Lipschitz continuous with respect to its second argument and
+    $d$-Lipschitz continuous with respect to its third argument, i.e.:
+    \begin{align}
+        |h(x, p_1, P) - h(x, p_2, P)| & \leq c \cdot d(p_1, p_2), \\
+        |h(x, p, P_1) - h(x, p, P_2)| & \leq d \cdot d_H(P_1, P_2).
+    \end{align}
+    Then the generalized \v{C}ech filtration using $h$ is $(c + d)$-stable if
+    the induced persistence modules are $q$-tame.
+\end{theorem}
+\begin{proof}
+    Similarly to the previous proofs, we fix $x \in \R^d$ and $p \in P$.
+    Then we have $q' \in Q$ such that $d(p, q') \leq d_H(P, Q)$.
+    By Lipschitzness of $h$, we have
+    \begin{align}
+        & |h(x, p, P) - h(x, q', Q)| \\
+        & \leq |h(x, p, P) - h(x, p, Q)| + |h(x, p, Q) - h(x, q', Q)| \\
+        & \leq d \cdot d_H(P, Q) + c \cdot d(p, q') \\
+        & \leq (c + d) \cdot d_H(P, Q),
+    \end{align}
+    and as this holds for any $p \in P$, we have
+    \begin{align}
+        f(Q, x) - f(P, x) & \leq h(x, q', Q) - f(P, x) \\
+        & \leq h(x, q', Q) - h(x, p, P) \\
+        & \leq (c + d) \cdot d_H(P, Q).
+    \end{align}
+    By the same reasoning, we have the same with $P$ and $Q$ swapped,
+    and combining the two inequalities, we obtain
+    \begin{equation}
+        |f(P, x) - f(Q, x)| \leq (c + d) \cdot d_H(P, Q).
+    \end{equation}
+    By Lemma~\ref{lem:pc_lipschitz_stable}, this implies that $f$ is
+    $(c + d)$-PC Lipschitz.
+\end{proof}
+\begin{theorem}
+    Let $h : \R^d \times \R^d \times \mathcal{P}(\R^d) \to \R$ be a kernel that
+    is $c$-Lipschitz continuous with respect to its second argument and
+    $d$-Lipschitz continuous with respect to every element in $P$, i.e.:
+    \begin{align}
+        |h(x, p_1, P) - h(x, p_2, P)| & \leq c \cdot d(p_1, p_2), \\
+        |h(x, p, P \cup \{p_1\}) - h(x, p, P \cup \{p_2\})| & \leq d \cdot d(p_1, p_2).
+    \end{align}
+    Then the
+    generalized \v{C}ech filtration using $h$ is $(c + d \cdot |P|)$-stable if
+    the induced persistence modules are $q$-tame.
+\end{theorem}
+\begin{proof}
     \todo{}
 \end{proof}
