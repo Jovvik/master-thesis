@@ -5,21 +5,20 @@
 \label{chap:introduction}
 
 Topological Data Analysis (TDA) provides a robust framework for understanding
-the shape of data~\cite{carlsson2021topological}. Among its tools is
-\emph{persistent homology}, which extracts
-topological features across different scales~\cite{boissonnat2018geometric}.
-Traditionally, persistent homology is applied to a finite point cloud $P
-\subseteq \R^d$ through filtrations of simplicial complexes built on top of $P$,
-such as the Vietoris–Rips or \v{C}ech complexes~\cite{chazal2021introduction}.
+the shape of data~\cite{carlsson2021topological}. Its primary tool,
+\emph{persistent homology}, extracts topological features across different
+scales~\cite{boissonnat2018geometric} and is traditionally applied to a finite
+point cloud $P \subseteq \R^d$ through filtrations of simplicial complexes built
+on top of $P$, such as the Vietoris–Rips or \v{C}ech complexes~\cite{chazal2021introduction}.
 An alternative (though sometimes equivalent) approach involves defining a
-real-valued function $\R^d \to \R$ that encodes the geometry of the data, and
-then computing the persistent homology of its sublevel (or superlevel) set
-filtration~\cite{edelsbrunner2010computational}. The resulting persistent
-homology captures topological features such as connected components, loops, and
-voids, and encodes them in a persistence diagram, which summarizes their birth
-and death across the filtration~\cite{chazal2021introduction}.
+real-valued function $\R^d \to \R$ that encodes the data's geometry, and
+then computing the persistent homology of the function's sublevel (or
+superlevel) set filtration~\cite{edelsbrunner2010computational}. The resulting
+persistent homology captures topological features such as connected components,
+loops, and voids, and encodes them in a \emph{persistence diagram}, which summarises
+their birth and death across the filtration~\cite{chazal2021introduction}.
 
-A classical and widely studied example is the \emph{nearest-neighbor distance
+A classical and widely studied example is the \emph{nearest-neighbour distance
 function},
 \begin{equation}
     f(P, x) = \min_{p \in P} d(x, p),
@@ -41,16 +40,16 @@ variations in the input. A stable GDF ensures that the extracted topological
 features are genuine reflections of the data's underlying structure, rather than
 artifacts of noise or sampling.
 
-While the nearest-neighbor function is stable, it is just one of many possible
+While the nearest-neighbour function is stable, it is just one of many possible
 density-like functions for
 TDA~\cite{anai2020dtm,hoefgeest2022christoffeldarbouxkerneltopologicaldata,phillips2015geometricinferencekerneldensity}.
 In practice, alternative functions may offer computational
 advantages~\cite{guibas2011witnessed,buchet2014efficientrobustpersistenthomology},
 better capture intrinsic structure~\cite{anai2020dtm}, or incorporate domain
 knowledge~\cite{fractalfract8120731}. For example, the DTM
-filtration~\cite{anai2020dtm} modifies the nearest-neighbor function to make
+filtration~\cite{anai2020dtm} modifies the nearest-neighbour function to make
 it more robust to noise and outliers. This motivates the study of
-\emph{generalized density functions} (GDFs), which are functions of the form
+\emph{generalised density functions} (GDFs), which are functions of the form
 \begin{equation}
     f(P, x) : \mathcal{P}(\R^d) \times \R^d \to \R.
 \end{equation}
@@ -84,7 +83,7 @@ comprehensive framework by identifying broader conditions that ensure stability,
 thereby unifying and extending these results. Concretely, we prove stability of
 the following classes of functions:
 \begin{enumerate}
-    \item We begin by examining natural extensions of the nearest-neighbor
+    \item We begin by examining natural extensions of the nearest-neighbour
         function, specifically of the form $f(P, x) = \min_{p \in P} h(d(p,
         x))$, where $h$ is a monotone Lipschitz continuous function. This
         is a modification of the \v{C}ech complex which allows the balls to grow
@@ -102,7 +101,7 @@ the following classes of functions:
         special cases, and allows for more general functions that are still
         stable, but may not be represented as a minimum over a set of
         functions.
-    \item Finally, recognizing that full Lipschitz continuity might be too
+    \item Finally, recognising that full Lipschitz continuity might be too
         strong, we consider Morse functions where Lipschitz-like conditions are
         imposed only on critical values. This aims to capture stability for
         functions whose may not be Lipschitz continuous globally, but are
@@ -123,5 +122,5 @@ contractibility, and closedness, as well as establish a lattice structure on the
 set of $c$-PC-Lipschitz functions.
 
 Taken together, our results contribute to the theoretical foundations of TDA by
-deepening the understanding of stability for generalized density functions. They
+deepening the understanding of stability for generalised density functions. They
 also provide practical guidance for designing stable filtrations.

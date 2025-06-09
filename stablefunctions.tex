@@ -1,7 +1,6 @@
-\chapter{Stable Generalized Density Functions}
+\chapter{Stable Generalised Density Functions}
 \label{chap:stable_functions}
 
-\todo{wording}
 Chapter~\ref{chap:background} reviewed foundational stability results for GDFs.
 This chapter examines the central question of this thesis: \emph{for which GDFs
 $f(P, x)$ can we guarantee that the sublevel set filtration of $f_P$ is stable?}
@@ -9,7 +8,7 @@ We explore several classes of GDFs for which stability can be guaranteed,
 ranging from simple cases to more complex constructions. We also highlight
 examples of functions that are not stable.
 
-\section{0-stable generalized density functions}
+\section{0-stable generalised density functions}
 
 The simplest class of stable GDFs are those whose persistence diagrams are
 invariant under changes to the input point cloud $P$.
@@ -19,6 +18,7 @@ invariant under changes to the input point cloud $P$.
     $x \in \R^d$. Equivalently, $f_P = f_Q$ as functions $\R^d \to \R$.
 \end{definition}
 \begin{theorem}
+    \label{thm:independent_stable}
     A point cloud independent GDF $f : \mathcal{P}(\R^d) \times \R^d \to \R$
     is $0$-stable.
 \end{theorem}
@@ -37,20 +37,130 @@ invariant under changes to the input point cloud $P$.
 
 However, point cloud independence is a sufficient, but not necessary, condition
 for 0-stability. Some GDFs whose values depend on $P$ can still yield identical
-persistence diagrams for all $P$, thus being $0$-stable. Consider the GDF
-$f : \mathcal{P}(\R) \times \R \to \R$ defined by $f(P, x) = x + |P|$. The
-sublevel sets $f_P^{-1}(-\infty, a]$ are exactly the intervals
-$(-\infty, a - |P|]$, which always have exactly one connected component
-that persists indefinitely. Thus, the dimension $0$ persistence diagram of $f_P$
-contains a single point born at $-\infty$ that never dies, and is empty
-in higher dimensions. Thus, for any two finite point clouds $P, Q \subseteq \R$,
-the persistence diagrams $\dgm(f_P)$ and $\dgm(f_Q)$ are identical, and we have
-$0$-stability without independence on the point cloud.
-This example also trivially generalizes to $\R^d$ with roots of $f$ defining a
-hyperplane.
-\todo{reword}
+persistence diagrams for all $P$, thus being $0$-stable.
+\begin{example}
+    \label{ex:x_plus_g}
+    Consider the GDF $f : \mathcal{P}(\R) \times \R \to \R$ defined by
+    $f(P, x) = x + g(P)$, where $g : \mathcal{P}(\R^d) \to \R$ is an arbitrary
+    function.
+    The sublevel sets $f_P^{-1}(-\infty, a]$ are exactly the intervals
+    $(-\infty, a - g(P)]$, which always have exactly one connected component
+    that persists indefinitely. Thus, the dimension $0$ persistence diagram of
+    $f_P$ contains a single point born at $-\infty$ that never dies, and the PD
+    is empty in higher dimensions. Thus, for any two finite point clouds $P, Q
+    \subseteq \R$, the persistence diagrams $\dgm(f_P)$ and $\dgm(f_Q)$ are
+    identical, and we have $0$-stability without independence on the point
+    cloud. This example also trivially generalises to $\R^d$ where $f$ defines a
+    hyperplane.
+\end{example}
 
-\section{Point cloud Lipschitz generalized density functions}
+\section{Unstable generalised density functions}
+
+To form an intuition for stability, we construct a simple GDF that is not $c$-stable
+for any $c\in \R^+$, i.e. \emph{unstable}.
+\begin{example}
+    Consider the GDF $f : \mathcal{P}(\R) \times \R \to \R$ defined by
+    \begin{equation}
+        \label{eq:unstable_gdf}
+        f(P, x) = \begin{cases}
+           0, & \text{if } x \in P, \\
+           1, & \text{otherwise.} 
+        \end{cases}
+    \end{equation}
+    Consider two point clouds $P = \{\mathbf{0}\}$ and
+    $Q = \{\mathbf{0}, \varepsilon \cdot \mathbf{1}\}$, where $\mathbf{0}\in
+    \R^d$ denotes the vector of zeros and $\mathbf{1} \in \R^d$ is the vector of
+    ones, and $\varepsilon > 0$ is a small positive number. The Hausdorff
+    distance between $P$ and $Q$ is $d_H(P, Q) = d(\mathbf{0}, \varepsilon \cdot
+    \mathbf{1}) = \varepsilon$. As shown in Figure~\ref{fig:pd_unstable}, the
+    persistence diagrams have bottleneck distance of at least
+    $\frac{1}{\sqrt{2}}$. As $\varepsilon \to 0$, the bottleneck distance
+    remains constant, while the Hausdorff distance tends to zero, which implies
+    that $f$ is not $c$-stable for any $c \in \R^+$.
+\end{example}
+While the example above is discontinuous, discontinuity is not required for
+instability. The following example has the same 0-dimensional persistence
+diagrams for $P = \{\mathbf{0}\}$ and $Q = \{\mathbf{0}, \varepsilon \cdot \mathbf{1}\}$
+as the function in~\eqref{eq:unstable_gdf}, but is continuous:
+\begin{equation}
+   f(P, x) = 2 \cdot D(P) \cdot \min_{p\in P} d(x, p),
+\end{equation}
+where $D(P)$ is the diameter of the point cloud $P$.
+\begin{figure}
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{tikzpicture}
+            \small
+            % Axes
+            \draw[->] (0,0) -- (5,0) node[right] {Birth};
+            \draw[->] (0,0) -- (0,5.5) node[above] {Death};
+            
+            % Grid
+            % \draw[gray!30] (0,0) grid (6,6);
+            
+            % Diagonal
+            \draw[dashed] (0,0) -- (5,5);
+            
+            % Point coords
+            \coordinate (p1) at (1,5);
+            
+            % Lines to axes
+            \draw[dashed,gray] (p1) -- (1,0) node[below,black] {$0$};
+
+            \draw[dashed,gray] (5,5) -- (0,5) node[left,black] {$\infty$};
+
+            % Points
+            \fill (p1) circle (2pt) node[above right] {$p_1$};
+        \end{tikzpicture}
+        \caption{The $0$-dimensional PD of $f_P$. The point $p_1$ corresponds to
+        the single connected component of the sublevel set $f_P^{-1}(-\infty,
+        a]$, which includes only $\mathbf{0}$ for $a \in [0, 1)$ and $\R^d$ for
+        $a \geq 1$.}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.5\textwidth}
+        \begin{tikzpicture}
+            \small
+            % Axes
+            \draw[->] (0,0) -- (5,0) node[right] {Birth};
+            \draw[->] (0,0) -- (0,5.5) node[above] {Death};
+            
+            % Grid
+            % \draw[gray!30] (0,0) grid (6,6);
+            
+            % Diagonal
+            \draw[dashed] (0,0) -- (5,5);
+            
+            % Point coords
+            \coordinate (p1) at (1,5);
+            \coordinate (p2) at (1,2.5);
+            
+            % Lines to axes
+            \draw[dashed,gray] (p1) -- (1,0) node[below,black] {$0$};
+            \draw[dashed,gray] (p2) -- (0,2.5) node[left,black] {$1$};
+
+            \draw[dashed,gray] (5,5) -- (0,5) node[left,black] {$\infty$};
+            
+            \draw[dashed,gray] (p2) -- (1.8,1.8) node[near end,above,align=center,black] {$\frac{1}{\sqrt{2}}$};
+
+            % Points
+            \fill (p1) circle (2pt) node[above right] {$p_2$};
+            \fill (p2) circle (2pt) node[above left] {$p_3$};
+        \end{tikzpicture}
+        \caption{The $0$-dimensional PD of $f_Q$. The point $p_2$ corresponds to
+        a connected component of the sublevel set $f_Q^{-1}(-\infty, a]$, which
+        includes only $\mathbf{0}$ for $a \in [0, 1)$ and $\R^d$ for $a \geq
+        1$, while the point $p_3$ corresponds to the connected component that
+        contains $\varepsilon \cdot \mathbf{1}$ for $a \in [0, 1)$.}
+    \end{subfigure}%
+    \caption{Persistence diagrams in dimension $0$ of $f_P$ and $f_Q$ for the
+    unstable GDF example. When matching points between the diagrams, the optimal
+    matching connects $p_1$ to $p_2$ with cost $0$ and $p_3$ to the diagonal
+    with cost $\frac{1}{\sqrt{2}}$.}
+    \label{fig:pd_unstable}
+\end{figure}
+
+\section{Point cloud Lipschitz generalised density functions}
 
 A powerful sufficient condition for stability is a form of Lipschitz continuity
 with respect to the point cloud:
@@ -151,22 +261,22 @@ that the corresponding GDF is PC-Lipschitz.
     \end{align}
     which is exactly the condition for $d$-PC Lipschitz continuity with $d = (1 + c^q)^{1/q}$.
 
-    The induced persistence modules of the weighted \v{C}ech filtration are
-    pointwise finite dimensional for finite point clouds
-    $P$~(\cite{anai2020dtm}, Proposition 3.1), which implies
-    that they are $q$-tame. By Lemma~\ref{lem:pc_lipschitz_stable}, the
+    For finite point clouds $P$, the weighted \v{C}ech filtration induces 
+    pointwise finite-dimensional persistence modules~(\cite{anai2020dtm},
+    Proposition~3.1), which are by Lemma~\ref{lem:tameness_pfd} $q$-tame.
+    By Lemma~\ref{lem:pc_lipschitz_stable}, the
     weighted \v{C}ech filtration is $d$-stable with $d = (1 + c^q)^{1/q}$.
 \end{proof}
 
-\section{Generalized \v{C}ech filtrations}
+\section{Generalised \v{C}ech filtrations}
 
-The nearest-neighbor distance function
+The nearest-neighbour distance function
 $f_{\mathrm{dist}}(P, x) = \min_{p \in P} d(x, p)$ can be
 seen as taking a minimum over a set of functions $h_p(x) = d(x, p)$, each
-centered around a point $p \in P$. We can generalize this to
+centered around a point $p \in P$. We can generalise this to
 $f(P, x) = \min_{p \in P} h(x, p)$, where $h(x, p) : \R^d \times \R^d \to \R$ is
 a more general ``kernel'' function. We refer to GDFs of this form as defining
-\emph{generalized \v{C}ech filtrations}. The stability of such GDFs depends on
+\emph{generalised \v{C}ech filtrations}. The stability of such GDFs depends on
 the properties of the kernel $h$.
 
 \subsection{Isotropic, monotone and Lipschitz kernels}
@@ -179,17 +289,17 @@ arguments~\cite{genton2001classes}.
     function $k : \R_+ \to \R$ such that $h(x, p) = k(d(x, p))$ for all
     $x, p \in \R^d$.
 \end{definition}
-Such kernels correspond to generalized \v{C}ech filtrations where the radius of
+Such kernels correspond to generalised \v{C}ech filtrations where the radius of
 the balls grows with the same rate for each point $p \in P$, but that
 rate may not be uniform.
 
-A generalized \v{C}ech filtration is stable if the kernel $h$ is isotropic,
+A generalised \v{C}ech filtration is stable if the kernel $h$ is isotropic,
 monotone and Lipschitz continuous:
 \begin{theorem}
     \label{thm:stable_isotropic}
     Let $h : \R^d \times \R^d \to \R$ be a kernel that is isotropic, such that
     $k$ is monotone increasing and $c$-Lipschitz continuous. Then the
-    generalized \v{C}ech filtration using $h$ is $c$-stable.
+    generalised \v{C}ech filtration using $h$ is $c$-stable.
 \end{theorem}
 \begin{proof}
     We want to show that the corresponding GDF $f$ is $c$-PC Lipschitz. Let $P,
@@ -220,29 +330,28 @@ monotone and Lipschitz continuous:
 
     The induced persistence modules of $f(P, x)$ are $q$-tame by the same
     reasoning as in the proof of Lemma~\ref{lem:tameness_pfd}. Therefore, by
-    Lemma~\ref{lem:pc_lipschitz_stable}, the generalized \v{C}ech
+    Lemma~\ref{lem:pc_lipschitz_stable}, the generalised \v{C}ech
     filtration using $h$ is $c$-stable.
 \end{proof}
 
 \subsection{Kernels Lipschitz in $p$}
 
-We can generalize further by considering $f(P, x) = \min_{p \in P} h(x, p)$
+We generalise further by considering $f(P, x) = \min_{p \in P} h(x, p)$
 where the kernel $h(x, p)$ is $c$-Lipschitz with respect to its second argument
 $p$, for any fixed $x$:
 \begin{equation}
     |h(x, p_1) - h(x, p_2)| \leq c \cdot d(p_1, p_2).
 \end{equation}
-Such kernels correspond to generalized \v{C}ech filtrations where the standard
+Such kernels correspond to generalised \v{C}ech filtrations where the standard
 process of growing balls around points $p \in P$ is modified significantly;
-the growing shapes may not be symmetric, connected, grow at the same rate for
-different $p \in P$ or even include the point $p$ itself. The only restriction
-imposed by Lipschitzness of the kernel is that as a point $p$ moves, the shape
-changes in a controlled manner. Surprisingly, even this weak condition coupled
-with $q$-tameness is sufficient for stability.
-\todo{rephrase this paragraph, explain more formally that ``shapes'' are just the sublevel sets}
+the sublevel sets $f_P^{-1}(-\infty, a]$ may not be symmetric, connected, grow
+at the same rate for different $p \in P$ or even include the point $p$ itself.
+The only restriction imposed by Lipschitzness of the kernel is that as a point
+$p$ moves, the shape changes in a controlled manner. Somewhat surprisingly, even
+this weak condition coupled with $q$-tameness is sufficient for stability.
 \begin{theorem}
     Let $h : \R^d \times \R^d \to \R$ be a kernel that is $c$-Lipschitz
-    continuous with respect to its second argument. Then the generalized
+    continuous with respect to its second argument. Then the generalised
     \v{C}ech filtration using $h$ is $c$-stable if the induced persistence
     modules are $q$-tame.
 \end{theorem}
@@ -266,16 +375,17 @@ with $q$-tameness is sufficient for stability.
     for any $x$, which by Lemma~\ref{lem:pc_lipschitz_stable} implies that
     $f$ is $c$-stable.
 \end{proof}
-This theorem is a generalization of Theorem~\ref{thm:stable_isotropic}.
-An isotropic kernel $h = d \circ k$ with $k$ being $c$-Lipschitz is also
-$c$-Lipschitz with respect to $p$. This follows because the distance function
-is 1-Lipschitz, and a composition of a $c$-Lipschitz function with a 1-Lipschitz
-function is $c$-Lipschitz~\cite{weaver2018lipschitz}.
+This theorem generalises Theorem~\ref{thm:stable_isotropic},
+as any isotropic kernel $h(x, p) = k(d(x, p))$ with $k$ being $c$-Lipschitz
+automatically is $c$-Lipschitz with respect to $p$. This follows because the
+distance function is 1-Lipschitz, and composing it with a $c$-Lipschitz function
+yields a $c$-Lipschitz function~\cite{weaver2018lipschitz}.
 
 The $q$-tameness condition for the induced persistence modules, while crucial,
 is not always straightforward to verify directly for a given kernel $h$. In the
 following lemma, we provide sufficient conditions for this.
 \begin{lemma}
+    \label{lem:tameness_kernels}
     Let $f(P, x) = \min_{p \in P} h(x, p)$. If, for every $p \in P$,
     the function $h_p(x) \coloneqq h(x, p)$ is continuous in $x$,
     bounded below and proper (i.e., $h_p^{-1}(K)$ is compact for every compact
@@ -305,14 +415,40 @@ following lemma, we provide sufficient conditions for this.
 
 \subsection{Kernels depending on the point cloud}
 
-A further generalization allows the kernel itself to depend on the point cloud
+We further generalise by allowing the kernel itself to depend on the point cloud
 $P$:
 \begin{equation}
     f(P, x) = \min_{p \in P} h(x, p, P).
 \end{equation}
-An example could be a distance metric defined by locally estimated covariance,
-leading to growing ellipses whose shape adapts to the local density of $P$. We
-prove two theorems that guarantee stability of such GDFs.
+\begin{example}
+    \label{ex:mahalanobis}
+    Consider $h(x, p, P)$ that is the pairwise Mahalanobis distance between $x$
+    and $p$, defined by locally estimated covariance of the point cloud
+    $P$~\cite{mclachlan1999mahalanobis}.
+    Let $N_k(p, P)$ be the set of $k$ nearest neighbours of $p$ in $P$. The
+    covariance estimate $\Sigma_p$ using $k$ nearest neighbours of $p$ is given
+    by
+    \begin{equation}
+        \Sigma_p = \frac{1}{k} \sum_{q \in N_k(p, P)} (q - p)(q - p)^\top.
+    \end{equation}
+    We would like to invert $\Sigma_p$, but it may be numerically unstable or
+    not invertible if $k$ is too small or if some points in $N_k(p, P)$ are
+    close to each other. To avoid this, we add a small positive
+    regularisation term $\varepsilon I$, where $I$ is the identity matrix.
+    The Mahalanobis distance is then defined as
+    \begin{equation}
+        h(x, p, P) = \sqrt{(x - p)^\top (\Sigma_p + \varepsilon I)^{-1} (x - p)}.
+    \end{equation}
+    Geometrically, this GDF defines a generalised \v{C}ech filtration where the
+    sublevel sets $f_P^{-1}(-\infty, a]$ are unions of ellipsoids centered at
+    $p$ with each ellipsoid having axes aligned with the eigenvectors of
+    $\Sigma_p + \varepsilon I$ and lengths proportional to the square roots of
+    the eigenvalues of $\Sigma_p + \varepsilon I$. The regularisation term
+    ensures that the ellipsoids are not degenerate. The standard \v{C}ech
+    filtration can be seen as a special case of this GDF with
+    $(\Sigma_p + \varepsilon I)$ replaced by the identity matrix.
+\end{example}
+We prove two theorems that guarantee stability of such GDFs.
 \begin{theorem}
     Let $h : \R^d \times \R^d \times \mathcal{P}(\R^d) \to \R$ be a kernel that
     is $c$-Lipschitz continuous with respect to its second argument (the point
@@ -347,6 +483,8 @@ prove two theorems that guarantee stability of such GDFs.
     By Lemma~\ref{lem:pc_lipschitz_stable}, this implies that $f$ is
     $(c + d)$-PC Lipschitz.
 \end{proof}
+Using this theorem, we show in Appendix~\ref{app:mahalanobis} that the GDF from
+Example~\ref{ex:mahalanobis} is stable.
 \begin{theorem}
     Let $h : \R^d \times \R^d \times \mathcal{P}(\R^d) \to \R$ be a kernel that
     is $c$-Lipschitz continuous with respect to its second argument and
@@ -357,7 +495,7 @@ prove two theorems that guarantee stability of such GDFs.
         |h(x, p, \{p_1\}) - h(x, p, \{p_2\})| & \leq d \cdot d(p_1, p_2). 
     \end{align}
     Then the
-    generalized \v{C}ech filtration using $h$ is
+    generalised \v{C}ech filtration using $h$ is
     $(c + d \cdot \max(|P|, |Q|))$-stable if the induced persistence modules are
     $q$-tame.
 \end{theorem}
@@ -387,39 +525,54 @@ prove two theorems that guarantee stability of such GDFs.
         & \leq d \cdot \max(|P|, |Q|) \cdot d_H(P, Q) + c \cdot d_H(P, Q).
     \end{align}
 \end{proof}
-\todo{maybe add the growing ellipses example here?}
+
+The conditions on the kernel for the induced persistence modules to be
+$q$-tame are exactly the same as the ones in Lemma~\ref{lem:tameness_kernels}.
 
 \section{Morse functions}
 The PC-Lipschitz condition is a strong global condition, which may not always
-hold for some useful GDFs. For example, we can consider a \v{C}ech-like GDF
-\begin{equation}
-    f_P(x) = \min_{p \in P} d(x, p)^2,
-\end{equation}
-where the balls grow faster the larger they are. While this function is not
-Lipschitz continuous on the whole space $\R^d$, it is Lipschitz continuous
-on some subset of $\R^d$ that covers the point cloud $P$. We can intuit that
-Lipschitz continuity everywhere is too strong of a condition, as it does not
-matter how the function behaves far away from some region of interest.
-\todo{terrible wording, what is this ``region of interest''?}
-\todo{one more example - function with no critical points, but not Lipschitz with the constant that we want}
+hold for some stable GDFs.
+\begin{example}
+    Consider a \v{C}ech-like GDF
+    \begin{equation}
+        f_P(x) = \min_{p \in P} d(x, p)^2,
+    \end{equation}
+    where the balls grow faster the larger they are. While this function is not
+    Lipschitz continuous on the whole space $\R^d$, it is Lipschitz continuous
+    on some subset of $\R^d$ that covers the point cloud $P$. We can intuit that
+    Lipschitz continuity everywhere is too strong of a condition, as it does not
+    matter how the function behaves far away from $P$.
+\end{example}
+\begin{example}
+    Consider a GDF of the form
+    \begin{equation}
+        f_P(x) = \norm{x - g(P)},
+    \end{equation}
+    where $g : \mathcal{P}(\R^d) \to \R^d$ is an arbitrary function of the point
+    cloud $P$. This GDF is not Lipschitz continuous for many choices of $g$,
+    but it is stable for any $g$, as it only has a single critical value at zero,
+    which results in a single point $(0, \infty)$ in the 0-dimensional persistence
+    diagram and no points in higher dimensions.
+\end{example}
 
-
-We can relax the PC-Lipschitz condition by restricting ourselves to \emph{Morse
-functions}, that is, smooth functions $f_P : \R^d \to \R$ whose critical points
-$x \in \crit(f_P)$ (where the gradient vanishes) are non-degenerate, i.e., the
-Hessian matrix $H(f_P)(x)$ is non-singular.
+Motivated by the two examples above, we can relax the PC-Lipschitz condition by
+restricting ourselves to \emph{Morse functions}, that is, smooth functions $f_P
+: \R^d \to \R$ whose critical points $x \in \crit(f_P)$ (where the gradient
+vanishes) are non-degenerate, i.e., the Hessian matrix $H(f_P)(x)$ is
+non-singular~\cite{matsumoto2002introduction}.
 \begin{theorem}
     Let $f : \mathcal{P}(\R^d) \times \R^d \to \R$ be a GDF such that for any
     finite point clouds $P, Q \subseteq \R^d$, the functions $f_P$ and $f_Q$ are
-    Morse, all sublevel sets $f_P^{-1}(-\infty, a]$ and $f_Q^{-1}(-\infty, a]$
-    are compact and the following condition holds:
+    Morse, and all sublevel sets $f_P^{-1}(-\infty, a]$ and $f_Q^{-1}(-\infty, a]$
+    are compact. Furthermore, let there exist a bijection
+    $\pi: \crit(f_P) \to \crit(f_Q)$ of critical points of $f_P$ and $f_Q$
+    such that the index of $x$ is equal to the index of $\pi(x)$ for all
+    $x \in \crit(f_P) \cup \crit(f_Q)$, and the following condition holds:
     \begin{equation}
         \label{eq:morse_crit}
-        \forall x \in \crit(f_P) \cup \crit(f_Q) :
-        |f_P(x) - f_Q(x)| \leq c \cdot d_H(P, Q),
+        \forall x \in \crit(f_P):
+        |f_P(x) - f_Q(\pi(x))| \leq c \cdot d_H(P, Q).
     \end{equation}
-    or more concisely, the functions $f_P|_{\crit(f_P) \cup \crit(f_Q)}$ and
-    $f_Q|_{\crit(f_P) \cup \crit(f_Q)}$ are $c$-PC-Lipschitz continuous.
     Then the GDF $f$ is $c$-stable, if the induced persistence modules are
     $q$-tame.
 \end{theorem}
@@ -428,11 +581,60 @@ Hessian matrix $H(f_P)(x)$ is non-singular.
     $f_P^{-1}(-\infty, a]$ has the homotopy type of a finite CW-complex, with
     one cell of dimension $\lambda$ for each critical point of index $\lambda$
     in $f_P^{-1}(-\infty, a]$~(\cite{milnor1963morse},~Theorem~3.5 and the
-    remark following it). Let's denote such a CW-complex by $C_P(a)$. The
+    remark following it). Let us denote such a CW-complex by $C_P(a)$. The
     previous statement can be written concisely as
     \begin{equation}
-        C_P(a) \simeq f_P^{-1}(-\infty, a],
+        \forall a \in \R \ \  C_P(a) \simeq f_P^{-1}(-\infty, a].
     \end{equation}
-    for all $k \in \N$.
-    \todo{}
+    Let $d = c \cdot d_H(P, Q)$.
+    We now show that $C_P(a)$ as a set is included in $C_Q(a + d)$.
+    Consider a cell $e^\lambda$ in $C_P(a)$. This cell corresponds to a critical
+    point $x \in \crit(f_P)$ of index $\lambda$ such that $f_P(x) \leq a$.
+    By the condition~\eqref{eq:morse_crit}, we have
+    \begin{equation}
+        f_Q(\pi(x)) \leq f_P(x) + d \leq a + d.
+    \end{equation}
+    Thus, we have a critical point $\pi(x) \in \crit(f_Q)$ also of index
+    $\lambda$ such that $f_Q(\pi(x)) \leq a + d$. This means that
+    the cell $e^\lambda$ in $C_P(a)$ corresponds to a cell of the same dimensionality in
+    $C_Q(a + d)$. Since this holds for any cell in $C_P(a)$, we
+    have \begin{equation}
+        C_P(a) \subseteq C_Q(a + d).
+    \end{equation}
+    By the same reasoning, we can show that $C_Q(a)$ is included in
+    $C_P(a + d)$. We also trivially have that
+    $C_P(a) \subseteq C_P(a')$ for any $a' \geq a$ and the same for $C_Q$.
+
+    Similarly to the proof of stability of the \v{C}ech filtration using
+    interleaving, the following diagram commutes up to homotopy, as all maps are
+    either inclusions or homotopies:
+    \begin{equation}
+        \begin{tikzcd}
+            f^{-1}_P(-\infty, a] \arrow[hook]{r} \arrow[leftrightarrow]{d}{\simeq}
+            & f^{-1}_P(-\infty, a + d] \arrow[hook]{r} \arrow[leftrightarrow]{d}{\simeq}
+            & f^{-1}_P(-\infty, a + 2d] \arrow[leftrightarrow]{d}{\simeq} \\
+            C_P(a) \arrow[hook]{r} \arrow[hook]{dr}
+            & C_P(a + d) \arrow[hook]{r} \arrow[hook]{dr}
+            & C_P(a + 2d) \\
+            C_Q(a) \arrow[hook]{r} \arrow[hook]{ur}
+            & C_Q(a + d) \arrow[hook]{r} \arrow[hook]{ur}
+            & C_Q(a + 2d) \\
+            f^{-1}_Q(-\infty, a] \arrow[hook]{r} \arrow[leftrightarrow]{u}{\simeq}
+            & f^{-1}_Q(-\infty, a + d] \arrow[hook]{r} \arrow[leftrightarrow]{u}{\simeq}
+            & f^{-1}_Q(-\infty, a + 2d] \arrow[leftrightarrow]{u}{\simeq}
+        \end{tikzcd}
+    \end{equation}
+    Thus we have
+    \begin{equation}
+        d_i(\{f^{-1}_P(-\infty, a]\}_a, \{f^{-1}_Q(-\infty, a]\}_a) \leq d,
+    \end{equation}
+    and similarly to the proof of stability of the \v{C}ech filtration, we have
+    that the bottleneck distance between the persistence diagrams is bounded by
+    $d$ from above.
 \end{proof}
+It should be noted that this theorem is not a strict generalisation of previous
+theorems, as there are GDFs that are PC-Lipschitz but which are not Morse.
+
+For conditions that guarantee $q$-tameness of induced persistence modules
+of Morse functions, we refer the reader to Theorem~8.1.4 and Corollary~8.1.12 of
+Maximilian Schmahl's PhD thesis~\cite{schmahl2023topics}.

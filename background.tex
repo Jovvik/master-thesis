@@ -1,7 +1,7 @@
 \chapter{Background}
 \label{chap:background}
 
-This chapter reviews the mathematical foundations for stability of generalized
+This chapter reviews the mathematical foundations for stability of generalised
 density functions. We briefly review the core concepts of how real-valued
 functions induce filtrations for persistent homology and then focus on
 established stability theorems that serve as a foundation and motivation for
@@ -10,9 +10,9 @@ analysis, mainly persistent homology. Otherwise, a comprehensive introduction to
 the subject is provided in the textbook by Herbert Edelsbrunner and John Harer
 \cite{edelsbrunner2010computational}.
 
-At the heart of this thesis lies the concept of a generalized density function (GDF).
-\begin{definition}[Generalized density function]
-    A generalized density function is a map $f : \mathcal{P}(\R^d) \times \R^d
+At the heart of this thesis lies the concept of a generalised density function (GDF).
+\begin{definition}[Generalised density function]
+    A generalised density function is a map $f : \mathcal{P}(\R^d) \times \R^d
     \to \R$,
     where $\mathcal{P}(\R^d)$ denotes the collection of all finite subsets of
     $\R^d$. For a given point cloud $P \in \mathcal{P}(\R^d)$, a GDF $f$ induces a
@@ -48,20 +48,20 @@ a persistence diagram is shown in Figure~\ref{fig:pd}.
     \begin{tikzpicture}
         \small
         % Axes
-        \draw[->] (0,0) -- (5,0) node[right] {Birth};
-        \draw[->] (0,0) -- (0,5.5) node[above] {Death};
+        \draw[->] (0,0) -- (6,0) node[right] {Birth};
+        \draw[->] (0,0) -- (0,6.5) node[above] {Death};
         
         % Grid
         % \draw[gray!30] (0,0) grid (6,6);
         
         % Diagonal
-        \draw[dashed] (0,0) -- (5,5);
+        \draw[dashed] (0,0) -- (6,6);
         
         % Point coords
         \coordinate (p1) at (1,3);
         \coordinate (p2) at (2,4);
         \coordinate (p3) at (1.5,2);
-        \coordinate (p4) at (3,5);
+        \coordinate (p4) at (3,6);
         
         % Lines to axes
         \draw[dashed,gray] (p1) -- (1,0) node[below,black] {$b_1$};
@@ -71,7 +71,7 @@ a persistence diagram is shown in Figure~\ref{fig:pd}.
         \draw[dashed,gray] (p3) -- (1.5,0) node[below,black] {$b_3$};
         \draw[dashed,gray] (p3) -- (0,2) node[left,black] {$d_3$};
         \draw[dashed,gray] (p4) -- (3,0) node[below,black] {$b_4$};
-        \draw[dashed,gray] (5,5) -- (0,5) node[left,black] {$\infty$};
+        \draw[dashed,gray] (6,6) -- (0,6) node[left,black] {$\infty$};
 
         % Points
         \fill (p1) circle (2pt) node[above right] {$p_1$};
@@ -86,18 +86,17 @@ a persistence diagram is shown in Figure~\ref{fig:pd}.
 \end{figure}
 
 \section{Tameness}
-\todo{wording in this section}
 
-Many known stability results outlined in
-Section~\ref{sec:known_stability_results} as well as the novel results in this
-thesis require the involved persistence modules to be \emph{$q$-tame}.
+Many established stability results and the original findings of this thesis rely
+on the involved persistence modules being \emph{$q$-tame}, a condition ensuring
+the finiteness of the rank for maps induced by filtrations.
 \begin{definition}[$q$-tame persistence module,~\cite{chazal2013structurestabilitypersistencemodules}]
     A persistence module $\mathbb{M}$ with vector spaces $M_a$ and linear maps
     $m_a^b: M_a \to M_b$ is \emph{$q$-tame} if $m_a^b$ is of finite rank for all
     $a < b$.
 \end{definition}
 
-$q$-tameness is a generalization of the following notion:
+$q$-tameness is a generalisation of the following notion:
 \begin{definition}[Pointwise finite-dimensional persistence module]
     A persistence module $\mathbb{M}$ is \emph{pointwise finite-dimensional
     (PFD)} if for every $a \in \R$, the vector space $M_a$ is
@@ -138,7 +137,7 @@ $a \in (-1, 1)$.
 To formalize the notion of stability, we need metrics to compare both point
 clouds and persistence diagrams. A common metric for point clouds is the
 \emph{Hausdorff distance}, which is also used in the definition of stability of
-the nearest-neighbor distance function.
+the nearest-neighbour distance function.
 \begin{definition}[Hausdorff distance]
     Given two non-empty sets $P, Q \subseteq \R^d$, where $\R^d$ is a metric
     space, the Hausdorff distance between $P$ and $Q$ is defined as
@@ -148,7 +147,7 @@ the nearest-neighbor distance function.
 \end{definition}
 Intuitively, the Hausdorff distance measures the ``maximum mismatch'' between the two
 sets, capturing the largest distance between a point in one set and its closest
-neighbor in the other set.
+neighbour in the other set.
 % It should be noted that for arbitrary $P, Q \subseteq X$, the
 % Hausdorff distance may be infinite, which makes it not a metric. However, if we
 % assume that $P$ and $Q$ are not empty and compact, then the Hausdorff distance is
@@ -170,7 +169,7 @@ The bottleneck distance measures the cost of the ``least expensive'' matching
 between the points of the two diagrams, where the cost is defined as the longest
 edge in the matching.
 
-% A generalization of the bottleneck distance is the \emph{Wasserstein distance},
+% A generalisation of the bottleneck distance is the \emph{Wasserstein distance},
 % which defines the cost of matching points in terms of the $p$-norm:
 % \begin{definition}[Wasserstein distance]
 %     Given two persistence diagrams $D_1$ and $D_2$, the Wasserstein distance
@@ -186,7 +185,7 @@ edge in the matching.
 
 With these metrics defined, we can formally define stability for a GDF.
 \begin{definition}
-    A generalized density function $f : \mathcal{P}(\R^d) \times \R^d \to \R$ is
+    A generalised density function $f : \mathcal{P}(\R^d) \times \R^d \to \R$ is
     $c$-\emph{stable} if for all non-empty finite point clouds $P, Q \subseteq
     \R^d$ and all homology dimensions $k \geq 0$, we have
     \begin{equation}
@@ -204,7 +203,7 @@ filtrations that can be represented as GDFs.
 
 \subsection{\v{C}ech filtration}
 As mentioned in Chapter~\ref{chap:introduction}, the \v{C}ech filtration can be
-represented as the sublevel set filtration of the nearest-neighbor distance
+represented as the sublevel set filtration of the nearest-neighbour distance
 function $f_{\mathrm{dist}}(P, x) \coloneqq \min_{p\in P} d(x, p)$.
 The sublevel sets $f_P^{-1}(-\infty, a]$ are precisely
 $\bigcup_{p\in P} B(p, a)$, the union of closed balls of radius $a$ centered at
@@ -220,12 +219,12 @@ The stability of this construction is a well-known result:
         d_b(\dgm_k(f_P), \dgm_k(f_Q)) \leq d_H(P, Q).
     \end{equation}
 \end{theorem}
-Using the terminology of this thesis, we say the nearest-neighbor distance
+Using the terminology of this thesis, we say the nearest-neighbour distance
 function is 1-stable.
 
 \subsection{Weighted \v{C}ech filtration}
 
-The weighted \v{C}ech filtration is a generalization of the \v{C}ech filtration
+The weighted \v{C}ech filtration is a generalisation of the \v{C}ech filtration
 used to define the DTM-filtration~\cite{anai2020dtm}.
 
 \begin{definition}[Weighted \v{C}ech filtration]
@@ -254,7 +253,7 @@ used to define the DTM-filtration~\cite{anai2020dtm}.
     where the balls are closed, and the ball of radius $-\infty$ is the empty
     set.
 \end{definition}
-The weighted \v{C}ech filtration is a strict generalization of the \v{C}ech
+The weighted \v{C}ech filtration is a strict generalisation of the \v{C}ech
 filtration, as the \v{C}ech filtration is the special case where $g(p) = 0$ for
 all $p \in P$.
 
@@ -312,11 +311,11 @@ theorem to the case of GDFs:
 This theorem directly implies that if a GDF $f$ satisfies
 $\norm{f_P - f_Q}_\infty \leq c \cdot d_H(P, Q)$ for some constant $c$, then
 $f$ is $c$-stable. This provides a powerful tool for proving stability of GDFs.
-As an example, we prove 1-stability of nearest neighbor distance function using
+As an example, we prove 1-stability of nearest neighbour distance function using
 this theorem. To do so, we first need to show the following lemma:
 \begin{lemma}
     \label{lem:cech_tame}
-    The persistence modules induced by the nearest-neighbor distance function
+    The persistence modules induced by the nearest-neighbour distance function
     $f_{\mathrm{dist}}(P, x)$ are $q$-tame.
 \end{lemma}
 \begin{proof}
@@ -328,7 +327,7 @@ this theorem. To do so, we first need to show the following lemma:
     persistence modules corresponding to $f_{\mathrm{dist}}$ are also PFD, which
     implies $q$-tameness by Lemma~\ref{lem:tameness_pfd}.
 \end{proof}
-Now we can prove the stability of the nearest-neighbor distance function:
+Now we can prove the stability of the nearest-neighbour distance function:
 \begin{proof}
     Let $P, Q \subseteq \R^d$ be two finite point clouds with Hausdorff distance
     $d = d_H(P, Q)$. Let $x$ be an arbitrary point in $\R^d$ with the nearest
@@ -386,10 +385,10 @@ from below.
     \end{equation*}
 \end{definition}
 Note that $\mathbb{M}$ and $\mathbb{N}$ are $0$-interleaved if and only if
-they are isomorphic. The triangular diagrams on the right collapse to diagrams
-that show that $\varphi_t$ and $\psi_t$ are inverses of each other, while
-the trapezoidal diagrams on the left ensure they commute with the linear maps
-$m$ and $n$.
+they are isomorphic~\cite{schnider2024introduction}. The triangular diagrams on
+the right collapse to diagrams that show that $\varphi_t$ and $\psi_t$ are
+inverses of each other, while the trapezoidal diagrams on the left ensure they
+commute with the linear maps $m$ and $n$.
 
 \begin{definition}[Interleaving distance]
     The interleaving distance between two persistence modules $\mathbb{M}$ and
@@ -399,8 +398,8 @@ $m$ and $n$.
     \end{equation}
 \end{definition}
 
-Finally, the interleaving distance and the bottleneck distance are equal under a
-mild tameness condition:
+Finally, the interleaving distance and the bottleneck distance are equal as long
+as the persistence modules are $q$-tame:
 \begin{theorem}[Isometry theorem,~\cite{chazal2013structurestabilitypersistencemodules}]
     \label{thm:isometry}
     Let $\mathbb{M}, \mathbb{N}$ be $q$-tame persistence modules. Then
@@ -433,23 +432,28 @@ from above:
 With these results in hand, we can apply the interleaving approach to once again
 prove 1-stability of the \v{C}ech filtration.
 \begin{proof}[\cite{schnider2024introduction}]
-    Let $X$ be a topological space, and $P, Q \subseteq X$ be two finite
+    Let $X$ be a metric topological space, and $P, Q \subseteq X$ be two finite
     point clouds with Hausdorff distance $d = d_H(P, Q)$.
-    Recall that the \v{C}ech complex $\check{C}^r(P)$ is homotopy equivalent
-    to the union of the balls $\bigcup_{p \in P} B(p, r)$.
+    Recall that the \v{C}ech complex $\check{C}^r(P)$ at scale $r$ is homotopy
+    equivalent to the union of the balls centered at points of $P$, formally
+    \begin{equation}
+        \check{C}^r(P) \simeq \bigcup_{p \in P} B(p, r).
+    \end{equation}
     Let $x \in B(p, r)$. By the definition of the Hausdorff distance, there exists
     a point $q \in Q$ such that $d(p, q) \leq d$. Therefore, by the triangle
     inequality we have
     \begin{equation}
         d(x, q) \leq d(x, p) + d(p, q) \leq r + d,
     \end{equation}
-    which implies that $x \in B(q, r + d)$. This provides an inclusion
+    implying $x \in B(q, r + d)$. As $x$ was arbitrary, this provides an inclusion
     \begin{equation}
         \bigcup_{p \in P} B(p, r) \subseteq \bigcup_{q \in Q} B(q, r + d).
     \end{equation}
-    With these two facts, we see that the following diagram commutes up to
-    homotopy, as all maps are either inclusions or homotopies:
+    By symmetric reasoning, we have the same with the roles of $P$ and $Q$
+    reversed. With these three facts, we see that the following diagram commutes
+    up to homotopy, as all maps are either inclusions or homotopies:
     \begin{equation}
+        \label{eq:cech_interleaving}
         \begin{tikzcd}
             \check{C}^r(P) \arrow[hook]{r} \arrow[leftrightarrow]{d}{\simeq}
             & \check{C}^{r + d}(P) \arrow[hook]{r} \arrow[leftrightarrow]{d}{\simeq}
@@ -470,12 +474,14 @@ prove 1-stability of the \v{C}ech filtration.
     \begin{equation}
         d_i(\check{C}(P), \check{C}(Q)) \leq d.
     \end{equation}
-    By Lemma~\ref{lem:cech_tame} and Theorem~\ref{thm:isometry}, as well as
+    Applying Lemma~\ref{lem:cech_tame} and Theorem~\ref{thm:isometry}, as well as
     Lemma~\ref{lem:interleaving_distance}, we have
     \begin{align}
         d_b(\dgm_k(\check{C}(P)), \dgm_k(\check{C}(Q)))
         & \leq d_i(H_k(\check{C}(P)), H_k(\check{C}(Q))) \\
         & \leq d_i(\check{C}(P), \check{C}(Q)) \\
-        & \leq d.
+        & \leq d,
     \end{align}
+    which is precisely the statement of stability of the \v{C}ech
+    filtration.
 \end{proof}
