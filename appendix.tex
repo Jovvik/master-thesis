@@ -64,4 +64,94 @@
 
 \chapter{The generalised \v{C}ech complex using the Mahalanobis distance kernel is stable}
 \label{app:mahalanobis}
-\todo{}
+
+\begin{lemma}
+    The generalised \v{C}ech complex using the Mahalanobis distance kernel
+    \begin{equation}
+        h(x, p, P) = \sqrt{(x - p)^\top (\Sigma(p, P) + \varepsilon I)^{-1} (x - p)} = \norm{A(p, P) (x - p)}_2,
+    \end{equation}
+    where $A(p, P) = (\Sigma(p, P) + \varepsilon I)^{-1/2}$ is stable.
+\end{lemma}
+\begin{proof}
+    To use Theorem~\ref{thm:pc_kernel_stability}, we need to bound
+    $|h(x, p, P) - h(x, q, P)|$ and $|h(x, p, P) - h(x, p, Q)|$.
+    Bounding the first term, we have:
+    \begin{align}
+        & |h(x, p, P) - h(x, q, P)| \nonumber \\
+        & = |\norm{A(p, P) (x - p)}_2 - \norm{A(q, P) (x - q)}_2| \\
+        & \leq \norm{A(p, P) (x - p) - A(q, P) (x - q)}_2 \\
+        & = \norm{A(p, P) (x - p) - A(q, P) (x - q) + A(p, P)(x - q) - A(p, P)(x - q)}_2 \\
+        & = \norm{A(p, P) (q - p) + (A(p, P) - A(q, P))(x - q)}_2 \\
+        & \leq \norm{A(p, P)(q - p)}_2 + \norm{(A(p, P) - A(q, P))(x - q)}_2 \\
+        & \leq \norm{A(p, P)}_{\mathrm{op}} \cdot \norm{q - p}_2 + \norm{A(p, P) - A(q, P)}_{\mathrm{op}} \cdot \norm{x - q}_2. \label{eq:bound_h_diff}
+    \end{align}
+    The operator norm $\norm{A(p, P)}_{\mathrm{op}} = \sup_{v : \norm{v}_2 = 1}
+    \norm{A(p, P)v}_2$ is precisely the largest eigenvalue of the matrix $A(p, P)$. 
+    As $\Sigma(p, P)$ is positive semi-definite, adding it to $\varepsilon I$ cannot
+    decrease the eigenvalues, and thus
+    $\norm{\Sigma(p, P) + \varepsilon I}_{\mathrm{op}} \geq \varepsilon$, which implies
+    \begin{equation}
+        \norm{A(p, P)}_{\mathrm{op}} \leq \varepsilon^{-1/2}.
+    \end{equation}
+    We now bound the second term, $\norm{A(p, P) - A(q, P)}_{\mathrm{op}}$.
+    First we bound $\norm{A(p, P) - A(q, P)}_{\mathrm{op}}$ in terms of
+    $\norm{\Sigma(p, P) - \Sigma(q, P)}_{\mathrm{op}}$.
+    As $(\Sigma(p, P) + \varepsilon I)$ is positive definite for $\varepsilon > 0$,
+    we can represent $A = (\Sigma + \varepsilon I)^{-1/2}$ as an integral:
+    \begin{equation}
+        (\Sigma + \varepsilon I)^{-1/2} = \frac{1}{\pi} \int_0^\infty t^{-1/2} (\Sigma + (\varepsilon + t)I)^{-1} \dd{t}.
+    \end{equation}
+    Using the identity $A^{-1} - B^{-1} = A^{-1}(B - A)B^{-1}$, we get:
+    \begin{align}
+        & A(p, P) - A(q, P) \nonumber \\
+        & = \frac{1}{\pi} \int_0^\infty t^{-1/2} \frac{\Sigma(p, P) - \Sigma(q, P)}{(\Sigma(p, P) + (\varepsilon + t)I) (\Sigma(q, P) + (\varepsilon + t)I)} \dd{t}.
+    \end{align}
+    Taking the operator norm and using $\norm{\Sigma + (\varepsilon + t)I}_{\mathrm{op}} \geq \varepsilon + t$, we have:
+    \begin{align}
+        & ||A(p, P) - A(q, P)||_{\mathrm{op}} \nonumber \\
+        & \leq \frac{1}{\pi} \int_0^\infty t^{-1/2} \norm{\Sigma(p, P) - \Sigma(q, P)}_{\mathrm{op}} \cdot (\varepsilon + t)^{-1} \cdot (\varepsilon + t)^{-1} \dd{t} \\
+        & = \frac{1}{\pi} \norm{\Sigma(p, P) - \Sigma(q, P)}_{\mathrm{op}} \int_0^\infty t^{-1/2} (\varepsilon + t)^{-2} \dd{t} \\
+        & = \norm{\Sigma(p, P) - \Sigma(q, P)}_{\mathrm{op}} \frac{1}{2} \varepsilon^{-3/2}.
+    \end{align}
+    Now we bound $\norm{\Sigma(p, P) - \Sigma(q, P)}_{\mathrm{op}}$.
+    We can split the term $k(\Sigma(p, P) - \Sigma(q, P))$ into three sums:
+    \begin{align}
+        & k(\Sigma(p, P) - \Sigma(q, P)) \nonumber \\
+        & = \sum_{x \in N_k(p, P) \cap N_k(q, P)}[(x - p)(x - p)^\top - (x - q)(x - q)^\top] + \nonumber \\
+        & \sum_{x \in N_k(p, P) \setminus N_k(q, P)} (x - p)(x - p)^\top +
+        \sum_{x \in N_k(q, P) \setminus N_k(p, P)} (x - q)(x - q)^\top.
+    \end{align}
+    The first term is bounded by
+    \begin{equation}
+        \sum_{x \in N_k(p, P) \cap N_k(q, P)} 2\norm{x - p}_2 \norm{p - q}_2 + \norm{p - q}_2^2 \leq k(2R_p \cdot d_H + d_H^2),
+    \end{equation}
+    where $R_p$ is the radius of the $k$-neighbourhood of $p$ and $d_H = d_H(P, Q)$.
+    
+    The other two terms are bounded by $k R_p^2$ and $k R_q^2$, respectively.
+
+    Combining these bounds, we have:
+    \begin{equation}
+        \norm{\Sigma(p, P) - \Sigma(q, P)}_{\mathrm{op}} \leq 2R_p \cdot d_H + d_H^2 + R_p^2 + R_q^2,
+    \end{equation}
+    and combining this with the bound of $\norm{A(p, P) - A(q, P)}_{\mathrm{op}}$, we get:
+    \begin{equation}
+        \norm{A(p, P) - A(q, P)}_{\mathrm{op}} \leq \frac{1}{2} \varepsilon^{-3/2} (2R_p \cdot d_H + d_H^2 + R_p^2 + R_q^2).
+    \end{equation}
+    Finally, plugging this into
+    Equation~\eqref{eq:bound_h_diff}, we have:
+    \begin{equation}
+        |h(x, p, P) - h(x, q, P)| \leq \varepsilon^{-1/2} d_H + \frac{1}{2} \varepsilon^{-3/2} (2R_p \cdot d_H + d_H^2 + R_p^2 + R_q^2) \cdot R_q.
+    \end{equation}
+    
+    Via similar reasoning, we can bound $|h(x, p, P) - h(x, p, Q)$:
+    \begin{align}
+        |h(x, p, P) - h(x, p, Q)| & = |||\norm{A(p, P) (x - p)}_2 - \norm{A(p, Q) (x - p)}_2| \\
+        & \leq \norm{A(p, P) (x - p) - A(p, Q) (x - p)}_2 \\
+        & = \norm{(A(p, P) - A(p, Q)) (x - p)}_2 \\
+        & \leq \norm{A(p, P) - A(p, Q)}_{\mathrm{op}} \cdot \norm{x - p}_2 \\
+        & \leq \frac{1}{2} \varepsilon^{-3/2} d_H \cdot (R_p^2 + R_q^2) \cdot R_p.
+    \end{align}
+
+    By choosing a sufficiently large $\varepsilon$, we achieve the bounds needed
+    by Theorem~\ref{thm:pc_kernel_stability}.
+\end{proof}

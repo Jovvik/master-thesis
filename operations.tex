@@ -1,17 +1,17 @@
 \chapter{Operations on stable functions}
 \label{chap:operations}
 
-Having identified several classes of stable Generalized Density Functions (GDFs)
-in Chapter~\ref{chap:stable_functions}, we now turn to a natural subsequent
-question: \emph{how does stability behave under common operations?}
-If we combine stable GDFs, for instance, by pointwise addition or by taking
-their minimum, is the resulting GDF also stable? If so, can we bound its
-stability constant in terms of the constants of the original functions? This
-chapter explores these questions, identifying conditions under which stability
-is preserved and providing counterexamples where it is not. Understanding these
-properties is crucial for constructing more complex stable GDFs from simpler
-ones and for gaining deeper insight into the structure of the space of stable
-functions.
+Having identified several classes of stable generalized density functions (GDFs)
+in Chapter~\ref{chap:stable_functions}, we now turn to natural subsequent
+questions: \emph{how does stability behave under common operations?
+If we combine stable GDFs, for instance, by addition or by taking their minimum,
+is the resulting GDF also stable? If so, can we bound its stability constant in
+terms of the constants of the original functions?}
+This chapter explores these questions, identifying conditions under which
+stability is preserved and providing counterexamples where it is not.
+Understanding these properties is crucial for constructing more complex stable
+GDFs from simpler ones and for gaining deeper insight into the structure of the
+space of stable functions.
 
 \section{Affine transformations}
 
@@ -21,7 +21,7 @@ multiplying it by a constant.
 \begin{theorem}[Stability under constant addition]
     \label{thm:constant_addition}
     Let $f(P, x)$ be a $c$-stable GDF with $q$-tame induced persistence modules.
-    Then, for any constant $z \in \mathbb{R}$, the GDF
+    Then for any constant $z \in \mathbb{R}$ the GDF
     $g(P, x) = f(P, x) + z$ is also $c$-stable with $q$-tame induced
     persistence modules.
 \end{theorem}
@@ -89,7 +89,7 @@ multiplying it by a constant.
             \fill[red] (q2z) circle (2pt) node[below right,red] {$q_2+z$};
             \fill[red] (q3z) circle (2pt) node[above right,red] {$q_3+z$};
             
-            \path[blue, bend left, shorten <= 0.15cm, shorten >= 0.15cm] (p1) edge (q1);
+            \path[blue, bend left=10, shorten <= 0.15cm, shorten >= 0.15cm] (p1) edge (q1);
             \path[blue, bend right=20, shorten <= 0.15cm, shorten >= 0.15cm] (p2) edge (q2);
             \path[blue, bend right, shorten <= 0.15cm, shorten >= 0.15cm] (p3) edge (q3);
             \path[red, bend right=10, shorten <= 0.15cm, shorten >= 0.15cm] (p1z) edge (q1z);
@@ -106,7 +106,7 @@ multiplying it by a constant.
         \label{fig:constant_addition_pds}
     \end{figure}
 
-    First we related the sublevel sets of $g_P$ and $f_P$.
+    First we relate the sublevel sets of $g_P$ and $f_P$.
     For any $a \in \R$:
     \begin{align}
         g^{-1}_P(-\infty, a] &= \{x \in \R^d \mid g_P(x) \leq a\} \\
@@ -118,8 +118,9 @@ multiplying it by a constant.
     is identical to the filtration $\{f_P^{-1}(-\infty, b]\}_{b\in \R}$ but
     with the indices shifted by $z$, i.e., $b = a - z$.
     Consequently, if a topological feature is born at $b$ and dies at $d$ in
-    the filtration of $f_P$, a corresponding feature in the filtration of $g_P$
-    will be born at $b + z$ and die at $d + z$, and vice versa.
+    the filtration of $f_P$, a corresponding feature of the same dimensionality
+    in the filtration of $g_P$ will be born at $b + z$ and die at $d + z$, and
+    vice versa.
     Thus, the persistence diagrams of $f_P$ and $g_P$ are related by a constant
     shift along both axes:
     \begin{equation}
@@ -133,7 +134,7 @@ multiplying it by a constant.
     From the relationship between the sublevel sets, we have
     $G_a = F_{a - z}$ and $\mathfrak{g}_a^{a'} = \mathfrak{f}_{a - z}^{a' - z}$.
     Since $\mathbb{F}$ is $q$-tame by assumption, $\mathfrak{f}_a^{a'}$ is of
-    finite rank for $b < b'$.
+    finite rank for $a < a'$.
     This directly implies that $\mathfrak{g}_a^{a'}$ is also of finite rank for
     all $a < a'$, so $\mathbb{G}$ is also $q$-tame.
     
@@ -169,8 +170,8 @@ multiplying it by a constant.
     \label{thm:constant_nonneg_multiplication}
     Let $f(P, x)$ be a $c$-stable GDF with $q$-tame induced persistence modules.
     Then for any constant $\alpha \geq 0$, the function
-    $g(P, x) = \alpha f(P, x)$ is also a $c\alpha$-stable GDF with
-    $q$-tame induced persistence modules.
+    $g(P, x) = \alpha f(P, x)$ is a $(c\alpha)$-stable GDF with $q$-tame induced
+    persistence modules.
 \end{theorem}
 \begin{proof}
     We first consider the case when $\alpha = 0$.
@@ -209,12 +210,31 @@ We can extend this theorem to negative constants using the following lemma:
     with $q$-tame induced persistence modules.
 \end{lemma}
 \begin{proof}
-    This is a direct consequence of the symmetry theorem by David Cohen-Steiner
-    et al.~\cite{cohen2009extending}, which states that for a real-valued
-    function $f$ on a $d$-manifold the persistence diagrams $\dgm_k(f)$ and
-    $\dgm_{d - k}(-f)$ are reflections of each other across the minor diagonal.
-    Given that $\R^d$ is a $d$-manifold and reflection preserves bottleneck
-    distance, the lemma follows immediately.
+    This result follows directly from the symmetry theorem by David Cohen-Steiner,
+    Herbert Edelsbrunner, and John Harer~\cite{cohen2009extending}.
+    The theorem states that for any real-valued function $f$ on a
+    $d$-dimensional manifold, the persistence diagram of $f$ in dimension $k$
+    is related to the persistence diagram of $-f$ in dimension $d - k$ via
+    reflection across the minor diagonal (the line $b + d = 0$).
+    More precisely, for every point $(b, d) \in \dgm_k(f)$, there corresponds a point
+    $(-d, -b) \in \dgm_{d - k}(-f)$, and this correspondence is bijective.
+
+    Given that $\R^d$ is a $d$-manifold, we can apply this theorem.
+    Now let $P, Q \in \mathcal{P}(\R^d)$ be finite point clouds and $f$ be a
+    $c$-stable GDF with $q$-tame induced persistence modules.
+    Let the bottleneck distance $d_b(\dgm_k(f_P), \dgm_k(f_Q))$ be achieved
+    by a sequence of matchings $\pi_i$ between the diagrams.
+    We can construct a sequence of matchings $\pi'_i$ between the diagrams
+    $\dgm_{d - k}(f_P)$ and $\dgm_{d - k}(f_Q)$ by reflecting the points
+    in $\pi_i$ across the minor diagonal:
+    \begin{equation}
+        \pi'_i(-d, -b) = (-d', -b') \text{ where } \pi_i(b, d') = (b', d').
+    \end{equation}
+    By the symmetry theorem, this is a valid sequence of matchings and the cost
+    of $\pi'_i$ is the same as that of $\pi_i$, thus $-f$ is also $c$-stable.
+    
+    $q$-tameness follows from the fact that the induced persistence modules
+    of $f$ and $-f$ are identical up to reindexing with the sign change.
 \end{proof}
 
 Combining Theorem~\ref{thm:constant_nonneg_multiplication} and
@@ -256,7 +276,33 @@ as the following example demonstrates.
     The function $h_P$ is constant for a fixed $P$.
     Its 0-dimensional persistence diagram has exactly one point
     $(2a \cdot \min P, \infty)$, representing the single connected component
-    $\R$ itself, born at $2a \cdot \min P$ and never dying.
+    $\R$ itself, born at $2a \cdot \min P$ and never dying, as can be seen
+    in Figure~\ref{fig:sum_stable_gdfs}.
+    
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}[scale=2]
+            % Axes
+            \draw[thick, ->] (-2,0) -- (2,0) node[right] {$x$};
+            \draw[thick, ->] (0,-0.5) -- (0,2.5);
+
+            \draw[domain=-2:2, smooth, variable=\x, blue, thick] plot ({\x}, {0.8*\x+1});
+            \draw[domain=-2:2, smooth, variable=\x, red, thick] plot ({\x}, {-0.8*\x+1});
+            \draw[domain=-2:2, smooth, variable=\x, green, thick] plot ({\x}, {2});
+
+            \draw (-0.05, 1) -- (0.05, 1);
+            \node[right] at (0.05, 1) {$a \cdot \min P$};
+            \draw (-0.05, 2) -- (0.05, 2);
+            \node[above right] at (0.05, 2) {$2a \cdot \min P$};
+
+            \node at (1.2, 0.3) {$g_P$};
+            \node at (-1.2, 0.3) {$f_P$};
+            \node at (1.7, 1.85) {$h_P$};
+        \end{tikzpicture}
+        \caption{The GDFs $f_P$ (red), $g_P$ (blue) and $h_P$ (green) for
+            an arbitrary point cloud $P$.}
+        \label{fig:sum_stable_gdfs}
+    \end{figure}
     
     Let $P = \{1\}, Q = \{2\}$ with $d_H(P, Q) = 1$.
     The 0-dimensional persistence diagrams of $h$ are
@@ -350,10 +396,12 @@ following counterexample.
             \node[right] at (0.05, 1) {$a$};
             \node at (-1.5, 2.2) {$g_P$};
             \node at (1.5, 2.2) {$f_P$};
+            \node at (0.9, 1.2) {$f_Q$};
         \end{tikzpicture}
         \caption{The GDFs $f_P$ (red), $g_P$ (blue) and $f_Q$ (green) for
             point clouds $P = \{-1, 1\}$ and $Q = \{0\}$.
-            The minimum $h_P$ of the $f_P$ and $g_P$ is shown in solid lines.}
+            The minimum $h_P$ of $f_P$ and $g_P$ is shown in solid red and green
+            lines.}
         \label{fig:min_max_stable_gdfs}
     \end{figure}
 
@@ -381,42 +429,189 @@ following counterexample.
     $c$-stable for any $c \in [0, \infty)$.
 \end{example}
 
-\todo{connect this theorem to the results above, something about how we can
-trade the Lipschitz requirement for some other ones}
+This example shows that stability alone is not sufficient to guarantee that the
+minimum of two GDFs is stable. The issue arose because the topological changes
+induced by perturbing the point cloud were different for the two functions,
+leading to an unstable interaction in their minimum. This suggests that for
+stability to be preserved, the interleaving maps of the two functions must be
+compatible. Building on this intuition, we can establish conditions for
+stability that are not reliant on the strong PC-Lipschitz property.
 
 \begin{theorem}
-    Let $f(P, x)$ and $g(P, x)$ be a $c_f$-stable GDF and a
-    $c_g$-stable GDF with $q$-tame induced persistence modules $\mathbb{F}_P$ and
-    $\mathbb{G}_P$ for all $P$. Let the sublevel sets of $f$ and $g$ be
-    denoted as $f(P)_a = f^{-1}_P(-\infty, a]$ and
-    $g(P)_a = g^{-1}_P(-\infty, a]$.
-    % As $\mathbb{F}_P$ and $\mathbb{G}_P$ are $q$-tame, we have by
-    % Theorem~\ref{thm:isometry} that
-    % \begin{align}
-    %     d_b(\dgm(f_P), \dgm(f_Q)) &= d_i(\mathbb{F}_P, \mathbb{F}_Q) \\
-    %     d_b(\dgm(g_P), \dgm(g_Q)) &= d_i(\mathbb{G}_P, \mathbb{G}_Q).
-    % \end{align}
-    Let also
-    \begin{align}
-        d_i(\mathbb{F}_P, \mathbb{F}_Q) &= d_i(\{f(P)_a\}, \{f(Q)_a\}) \\
-        d_i(\mathbb{G}_P, \mathbb{G}_Q) &= d_i(\{g(P)_a\}, \{g(Q)_a\}),
-    \end{align}
-    i.e. the interleaving maps for the persistence modules are induced by maps
-    between filtrations of sublevel sets.
-    Let those maps be denoted $\varphi^f_a : f(P)_a \to f(Q)_{a + c_f \cdot d_H(P, Q)}$,
-    $\psi^f_a : f(Q)_a \to f(P)_{a + c_f \cdot d_H(P, Q)}$, and the same for $g$.
-    Finally, we require three conditions:
+    Let $f$ and $g$ be $c_f$-stable and $c_g$-stable GDFs, respectively.
+    Let the sublevel sets of $f$ and $g$ be denoted as
+    $f(P)_a = f^{-1}_P(-\infty, a]$ and $g(P)_a = g^{-1}_P(-\infty, a]$.
+
+    Assume that for any finite point clouds $P, Q \in \mathcal{P}(X)$:
     \begin{enumerate}
-        \item $f(P, x) = g(P, x) \implies \varphi_a^f(x) = \varphi_a^g(x)$
-        and $\psi_a^f(x) = \psi_a^g(x)$ for all $a \geq f(P, x)$.
-        \item $f_P$ and $g_P$ are both continuous for all $P$.
-        \item $f(P, x) \leq g(P, x) \implies f(Q, x) \leq g(Q, x)$
+        \item The induced persistence modules $\mathbb{F}_P$ and $\mathbb{G}_P$
+        are $q$-tame.
+        \item The functions $f_P, g_P$ are continuous.
+        \item The stability of $f$ and $g$ is realised by interleavings of their
+        sublevel set filtrations, i.e.:
+        \begin{align}
+            c_f \cdot d_H(P, Q) = d_i(\mathbb{F}_P, \mathbb{F}_Q) &= d_i(\{f(P)_a\}, \{f(Q)_a\}) \\
+            c_g \cdot d_H(P, Q) = d_i(\mathbb{G}_P, \mathbb{G}_Q) &= d_i(\{g(P)_a\}, \{g(Q)_a\}).
+        \end{align}
+        Let these interleavings be realised by maps
+        \begin{align}
+            \varphi^f_a & : f(P)_a \to f(Q)_{a + c_f \cdot d_H(P, Q)} \\
+            \psi^f_a & : f(Q)_a \to f(P)_{a + c_f \cdot d_H(P, Q)} \\
+            \varphi^g_a & : g(P)_a \to g(Q)_{a + c_g \cdot d_H(P, Q)} \\
+            \psi^g_a & : g(Q)_a \to g(P)_{a + c_g \cdot d_H(P, Q)}.
+        \end{align}
+        \item \label{item:min_agree} For all $x \in \R^d$ such that $f(P, x) =
+        g(P, x)$, we also have that $\varphi_a^f(x) = \varphi_a^g(x)$ and
+        $\psi_a^f(x) = \psi_a^g(x)$.
+        \item \label{item:min_monotone} For all $x \in \R^d$ such that $f(P, x)
+        \leq g(P, x)$, we also have that $f(Q, x) \leq g(Q, x)$.
     \end{enumerate}
     Then the function $h(P, x) = \min\{f(P, x), g(P, x)\}$ is
-    a $\max\{c_f, c_g\}$-stable GDF with $q$-tame induced persistence modules.
+    a $\max\{c_f, c_g\}$-stable GDF if the induced persistence modules of $h$
+    are $q$-tame.
 \end{theorem}
 \begin{proof}
-    \todo{}
+    Fix $P, Q \in \mathcal{P}(X)$.
+    Let $\varepsilon_f = c_f \cdot d_H(P, Q)$ be the interleaving distance
+    between the persistence modules $\mathbb{F}_P$ and $\mathbb{F}_Q$,
+    and similarly $\varepsilon_g = c_g \cdot d_H(P, Q)$.
+    We want to define $\zeta_a$ and $\eta_a$ such that the following diagrams
+    commute, where $\varepsilon_h \coloneqq \max{c_f, c_g} \cdot d_H(P, Q)$:
+    
+    \begin{equation}
+        \label{eq:minimum_commute_par_1}
+        \begin{tikzcd}
+            h(P)_a \arrow[hook]{rr} \arrow{dr}[swap]{\zeta_a} & & h(P)_{a'} \arrow{dr}{\zeta_{a'}} \\
+            & h(Q)_{a + \varepsilon} \arrow[hook]{rr} & & h(Q)_{a' + \varepsilon}
+        \end{tikzcd}
+    \end{equation}
+    \begin{equation}
+        \label{eq:minimum_commute_par_2}
+        \begin{tikzcd}
+            & h(P)_{a + \varepsilon} \arrow[hook]{rr} & & h(P)_{a' + \varepsilon} \\
+            h(Q)_a \arrow[hook]{rr} \arrow{ur}{\eta_a} & & h(Q)_{a'} \arrow{ur}[swap]{\eta_{a'}}
+        \end{tikzcd}
+    \end{equation}
+    \begin{equation}
+        \label{eq:minimum_commute_tri_1}
+        \begin{tikzcd}
+            h(P)_a \arrow{dr}[swap]{\zeta_a} \arrow[hook]{rr} && h(P)_{a + 2\varepsilon} \\
+            & h(Q)_{a + \varepsilon} \arrow{ur}[swap]{\eta_{a + \varepsilon}}
+        \end{tikzcd}
+    \end{equation}
+    \begin{equation}
+        \label{eq:minimum_commute_tri_2}
+        \begin{tikzcd}
+            & h(P)_{a + \varepsilon} \arrow{dr}{\zeta_{a + \varepsilon}} \\
+            h(Q)_a \arrow{ur}{\eta_a} \arrow[hook]{rr} && h(Q)_{a + 2\varepsilon}
+        \end{tikzcd}
+    \end{equation}
+    Let us define the maps $\zeta_a$ and $\eta_a$ as follows:
+    \begin{align}
+        \zeta_a(x) &= \begin{cases}
+            \varphi^f_a(x) & \text{if } f(P, x) \leq g(P, x) \\
+            \varphi^g_a(x) & \text{otherwise}
+        \end{cases} \\
+        \eta_a(x) &= \begin{cases}
+            \psi^f_a(x) & \text{if } f(Q, x) \leq g(Q, x) \\
+            \psi^g_a(x) & \text{otherwise}
+        \end{cases}
+    \end{align}
+    These maps are well-defined, as for any $x \in H(P)_a$,
+    either $f(P, x) \leq g(P, x)$ or $f(P, x) > g(P, x)$.
+    In the first case, $x$ is also in $f(P)_a$ and thus $\varphi_a^f(x)$ is
+    well-defined. Similarly, in the second case, $x$ is in $g(P)_a$ and
+    $\varphi_a^g(x)$ is well-defined. The same holds for $\eta_a$.
+    
+    For these maps to induce homomorphisms of homology groups, we need to ensure
+    they are continuous~\cite{hatcher2005algebraic}.
+
+    Let
+    \begin{equation}
+        A = \{f(P, x) \leq g(P, x) \mid x \in h(P)_a\}  
+    \end{equation}
+    and
+    \begin{equation}
+        B = \{f(P, x) \geq g(P, x) \mid x \in h(P)_a\}.
+    \end{equation}
+    Both of these sets are closed in $h(P)_a$ endowed with the subspace topology
+    because we can define
+    \begin{equation}
+        k(x) \coloneqq g(P, x) - f(P, x),
+    \end{equation}
+    which is continuous as the difference of continuous functions.
+    We then have:
+    \begin{align}
+        A &= h(P)_a \cap k^{-1}((-\infty, 0]) \\
+        B &= h(P)_a \cap k^{-1}([0, \infty)),
+    \end{align}
+    and both preimages are closed sets in $\R^d$ as preimages of closed sets
+    under a continuous function.
+    
+    Now we consider the restriction $\zeta_a|_A$.
+    As $f(P, x) \leq g(P, x)$ for all $x \in A$, we have $\zeta_a(x) = \varphi_a^f(x)$
+    for all $x \in A$, so $h_P|_A = \varphi_a^f|_A$.
+    
+    The case of $\zeta_a|_B$ is slightly different, as we need to separately
+    consider the case of $x$ being such that $f(P, x) = g(P, x)$.
+    By condition~\ref{item:min_agree}, we have that $\varphi_a^f(x) =
+    \varphi_a^g(x)$ for such $x$, and thus we have $\zeta_a|_B =
+    \varphi_a^g|_B$.
+
+    Consequently, by the pasting lemma~(\cite{munkres2000topology},
+    Theorem~18.3) $\zeta_a$ is continuous on $A \cup B = h(P)_a$.
+    Applying the same reasoning to $\eta_a$, we conclude that
+    $\eta_a$ is continuous on $h(Q)_a$.
+    
+    Now we prove commutativity of diagrams
+    \eqref{eq:minimum_commute_par_1}-\eqref{eq:minimum_commute_tri_2}.
+    We first examine the diagram \eqref{eq:minimum_commute_par_1}.
+    Let $x \in H(P)_a$. Suppose $f(P, x) \leq g(P, x)$ and thus
+    $\zeta_a(x) = \varphi_a^f(x)$. Then $\zeta_{a'}(x)$ is defined as
+    $\varphi_{a'}^f(x)$, which is equal to $\varphi_a^f(x)$.
+    The same follows when $f(P, x) > g(P, x)$.
+    Thus, the diagram commutes and by the same reasoning, the diagram
+    \eqref{eq:minimum_commute_par_2} also commutes.
+    
+    Next, we consider the triangle diagrams \eqref{eq:minimum_commute_tri_1}
+    and \eqref{eq:minimum_commute_tri_2}.
+    Let $x \in H(P)_a$.
+    If $f(P, x) \leq g(P, x)$, then $\zeta_a(x) = \varphi_a^f(x)$.
+    By condition~\ref{item:min_monotone}, we also have that $f(Q, x) \leq g(Q, x)$,
+    so $\eta_{a + \varepsilon}(x) = \psi_{a + \varepsilon}^f(x)$.
+    As $\varphi_a^f$ and $\psi_{a + \varepsilon}^f$ are interleaving maps
+    for $f$~(\cite{schnider2024introduction}, Theorem~6.17), they commute with
+    the inclusion map, and thus the triangle \eqref{eq:minimum_commute_tri_1}
+    commutes for the case when $f(P, x) \leq g(P, x)$.
+
+    The same reasoning applies when $f(P, x) > g(P, x)$, and thus the triangle
+    \eqref{eq:minimum_commute_tri_1} commutes in all cases.
+    By the same reasoning, the triangle
+    \eqref{eq:minimum_commute_tri_2} also commutes.
+    
+    As all the diagrams commute, we can conclude that 
+    \begin{equation}
+        d_i(\{h(P)_a\}, \{h(Q)_a\}) \leq \max\{c_f, c_g\} \cdot d_H(P, Q),
+    \end{equation}
+    which by Lemma~\ref{lem:interleaving_distance} implies that
+    \begin{equation}
+        d_i(\mathbb{H}_P, \mathbb{H}_Q) \leq d_i(\{h(P)_a\}, \{h(Q)_a\}) \leq \max\{c_f, c_g\} \cdot d_H(P, Q),
+    \end{equation}
+    and as we assume $\mathbb{H}_P$ and $\mathbb{H}_Q$ to be $q$-tame, we have
+    that $\mathbb{H}_P$ is $\max\{c_f, c_g\}$-stable.
+\end{proof}
+
+We also identify conditions under which the pointwise minimum of two GDFs
+induces $q$-tame persistence modules.
+\begin{lemma}
+    If for every $P \in \mathcal{P}(\R^d)$ the functions $f_P$ and $g_P$ are
+    continuous, bounded below and proper, then their pointwise minimum $h_P$
+    is also continuous, bounded below and proper.
+    Consequently, by Theorem~\ref{thm:tameness_condition}, the induced persistence
+    modules of the pointwise minimum $h_P$ are $q$-tame.
+\end{lemma}
+\begin{proof}
+    Same argument as in the proof of Lemma~\ref{lem:tameness_kernels}.
 \end{proof}
 
 The results in this section concerning the pointwise minimum can be extended to

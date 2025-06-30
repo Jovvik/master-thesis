@@ -1,4 +1,98 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
-\todo{}
+In this thesis, we explored a fundamental question in topological data analysis:
+\emph{when are the results we get reliable?} Specifically, we looked at the
+stability of generalised density functions. If a small change in our input data
+leads to a large change in the resulting persistence diagram, we can't be
+confident in our analysis. Our main goal was to find and describe classes of
+GDFs that don't have this problem, functions that are stable against
+perturbations of the input point cloud.
+
+\section{Summary of findings}
+
+Our main contributions fall into three main areas:
+
+\begin{enumerate}
+    \item \emph{Identifying stable functions}: We have found several families of
+    stable GDFs.
+    \begin{enumerate}
+        \item \emph{PC-Lipschitz GDFs}: We showed that Lipschitz continuity with
+        respect to the point cloud is a powerful sufficient condition for
+        stability. This class of functions is well-behaved and easy to work with.
+
+        \item \emph{Generalised \v{C}ech Filtrations}: We extended known
+        stability for the nearest-neighbour distance function to more flexible
+        versions, including:
+        \begin{enumerate}
+            \item Functions of the form $f(P, x) = \min_{p \in P} h(d(x, p))$ for
+            monotone Lipschitz $h$.
+            \item More general kernels $f(P, x) = \min_{p \in P} h(x, p)$ where $h$
+            is Lipschitz in its second argument.
+            \item Point cloud dependent kernels $f(P, x) = \min_{p \in P} h(x, p,
+            P)$, as long as they satisfy certain Lipschitz conditions.
+        \end{enumerate}
+
+        \item \emph{Morse Functions}: For Morse functions, we found that
+        stability doesn't require a global property like being PC-Lipschitz.
+        Instead, it depends on how the function's critical points behave.
+    \end{enumerate}
+
+    \item \emph{Operations on stable functions}: We investigated how stability
+    is preserved under common operations:
+    
+    \begin{enumerate}
+        \item For PC-Lipschitz GDFs, stability is preserved by affine transformations,
+        addition, and taking the pointwise minimum or maximum.
+        \item However, for the broader class of all stable GDFs, we showed this
+        isn't always true, although stability is still preserved by affine
+        transformations. We provided examples where combining two stable
+        functions results in an unstable one.
+    \end{enumerate}
+
+    \item \emph{The structure of the function spaces}: We studied the spaces of
+    stable and PC-Lipschitz functions, showing that:
+
+    \begin{enumerate}
+        \item PC-Lipschitz GDFs form an unbounded distributive lattice under pointwise
+        minimum and maximum.
+        \item The space of PC-Lipschitz GDFs is convex and closed in various function
+        space topologies.
+        \item The space of all stable GDFs is path-connected and contractible,
+        as well as closed in the topology of pointwise convergence.
+        \item Interestingly, the PC-Lipschitz functions are not dense within the
+        space of all stable functions, meaning there are stable functions
+        that cannot be approximated by these nicer PC-Lipschitz ones.
+    \end{enumerate}
+\end{enumerate}
+
+Together, these results help build a more solid theoretical foundation for using
+GDFs in practice, connecting and extending previous research.
+
+\section{Open questions and future work}
+
+This work also opens up several interesting questions for future research:
+
+\begin{enumerate}
+    \item \emph{What makes a function stable?} We found several conditions that
+    are sufficient for stability, but we still lack necessary conditions. Fully
+    characterizing the space of all stable functions remains an open problem.
+    
+    \item \emph{How common are PC-Lipschitz functions?}: While the PC-Lipschitz
+    condition is useful, how restrictive is it? We could use tools like
+    prevalence or shyness to understand how common PC-Lipschitz functions are
+    among all stable functions.
+
+    \item \emph{Non-Euclidean spaces}: Our work focused on data in standard
+    Euclidean space, but TDA is applicable for other kinds of data as well.
+    Extending stability results to those settings is an important next step.
+    
+    \item \emph{Wasserstein stability}: We measured stability using the
+    bottleneck distance. It would be valuable to see how these results change
+    when using other metrics between persistence diagrams, like the Wasserstein
+    distance.
+\end{enumerate}
+
+By mapping out the properties of stable GDFs, this work offers both a practical
+guide for researchers applying TDA and a theoretical foundation for those
+developing new methods.

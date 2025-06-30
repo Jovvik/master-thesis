@@ -1,76 +1,145 @@
 \chapter{The space of stable functions}
 \label{chap:space}
 
-\todo{This section is very much a draft and requires a lot of finishing and
-rewriting to flow properly. Some results are not stated yet.}
+In the previous chapters, we identified several classes of stable generalized
+density functions and explored how they can be combined to form new stable
+functions.
+This naturally leads to considering the collections of these functions as
+algebraic structures and topological spaces.
+Let $\mathcal{S}_c$ denote the set of all $c$-stable GDFs
+and $\mathcal{L}_c$ denote the set of all $c$-PC-Lipschitz GDFs.
+We have established that $\mathcal{L}_c \subseteq \mathcal{S}_c$
+(Lemma~\ref{lem:pc_lipschitz_stable}) and that this inclusion is proper
+(Example~\ref{ex:x_plus_g}).
 
-Let $\mathcal{S}_c$ be the set of all $c$-stable functions
-and $\mathcal{L}_c$ be the set of all $c$-PC-Lipschitz functions.
-Per Lemma~\ref{lem:pc_lipschitz_stable}, we have $\mathcal{L}_c \subset \mathcal{S}_c$.
-\todo{example to show that the subset is proper.}
-We first investigate $\mathcal{L}_c$, then $\mathcal{S}_c$ and finally the relationship between the two.
+This chapter investigates the algebraic and topological structure of these sets.
+We will first explore $\mathcal{L}_c$, the more structured of the two spaces.
+We will then turn our attention to the broader space $\mathcal{S}_c$ and
+conclude by examining the relationship between them.
 
 \section{The space of $c$-PC-Lipschitz functions}
 \label{sec:space_pc_lipschitz}
 
+The set $\mathcal{L}_c$ exhibits several structural properties.
+
 \begin{theorem}
-    $\mathcal{L}_c$ forms a distributive lattice with respect to the operations
-    of pointwise minimum and pointwise maximum. This lattice is not bounded
-    neither from above nor from below.
+    The set $\mathcal{L}_c$ forms a distributive lattice with respect to the
+    operations of pointwise minimum and pointwise maximum, that is, the minimum
+    and maximum of two $c$-stable GDFs is also a $c$-stable GDF and the following laws hold:
+    \begin{align}
+        \max(f, \min(f, g)) & = f \\
+        \min(f, \max(f, g)) & = f \\
+        \max(f, \min(g, h)) & = \min(\max(f, g), \max(f, h)) \\
+        \min(f, \max(g, h)) & = \max(\min(f, g), \min(f, h)).
+    \end{align}
+    This lattice is bounded neither from above nor from below.
 \end{theorem}
 \begin{proof}
-    Both minimum and maximum are closed in $\mathcal{L}_c$ by
-    Theorem~\ref{thm:min_pc_lipschitz}.
-    Distributivity is well-known \todo{reference}.
-    To show that the lattice is not bounded, suppose $f$ is a top element.
-    $f + 1$ is also in $\mathcal{L}_c$ by Theorem~\ref{thm:constant_addition}
-    and $\max(f, f + 1) = f + 1 \neq f$, thus $f$ cannot be a top element.
-    We can similarly show that there is no bottom element
-    by considering $f - 1$.
+    \begin{enumerate}
+        \item Both minimum and maximum are closed in $\mathcal{L}_c$ by
+            Theorem~\ref{thm:min_pc_lipschitz}. The absorption laws follow from
+            the fact that they hold for $(\R, \min, \max)$.
+        \item Distributivity follows from the fact that it holds for $(\R, \min, \max)$.
+        \item To show that the lattice is not bounded, suppose $f$ is a top
+            element. $f + 1$ is also in $\mathcal{L}_c$ by
+            Theorem~\ref{thm:constant_addition} and $\max(f, f + 1) = f + 1 \neq
+            f$, thus $f$ cannot be a top element. 
+        \item We can similarly show that there is no bottom element by
+            considering $f - 1$.
+    \end{enumerate}
 \end{proof}
 
-As the sum of two $c$-PC-Lipschitz functions is only $(2c)$-PC-Lipschitz,
-the space $\mathcal{L}_c$ is not closed under addition and thus does not form a
-vector space with addition and scalar multiplication.
-A natural attempt to form a vector space is to consider the average instead of
-the sum, but that does not play well with scalar multiplication.
+While $\mathcal{L}_c$ has a lattice structure, it does not form a vector space.
+As shown in Theorem~\ref{thm:sum_pc_lipschitz}, the sum of two
+functions in $\mathcal{L}_c$ lies in $\mathcal{L}_{2c}$, but not necessarily in
+$\mathcal{L}_c$. This lack of closure under addition prevents $\mathcal{L}_c$
+from being a vector space. Using an alternative operation such as averaging,
+fails to satisfy the axioms for scalar multiplication.
 
-The space $\mathcal{L} = \bigcup_{c \in \R^+} \mathcal{L}_c$ is a vector space,
-but is not of much interest, as practical applications do not concern themselves
-with merely stable functions, but rather with $c$-stable functions for some
-fixed $c$. We refer an interested reader to the book by Weaver
-\cite{weaver2018lipschitz} for a comprehensive treatment of the space of
-Lipschitz functions.
+On the other hand, the space of all PC-Lipschitz GDFs
+$\mathcal{L} = \bigcup_{c \in \R^+} \mathcal{L}_c$ does form a vector space.
+However, this space is of less interest for the purposes of TDA, as practical
+applications do not concern themselves with merely stable functions, but rather
+with $c$-stable functions for some fixed $c$.
+For a comprehensive treatment of general Lipschitz function spaces,
+we refer the interested reader to the work of N.~Weaver~\cite{weaver2018lipschitz}.
+
+We now turn to topological properties of $\mathcal{L}_c$.
 
 \begin{theorem}
-    $\mathcal{L}_c$ is convex.
+    The set $\mathcal{L}_c$ is convex.
 \end{theorem}
 \begin{proof}
-    Let $f, g \in \mathcal{L}_c$ and $\alpha \in [0, 1]$.
-    We need to show that $\alpha f + (1 - \alpha) g \in \mathcal{L}_c$.
-    By Theorem~\ref{thm:constant_nonneg_multiplication}, we have
-    $\alpha f \in \mathcal{L}_{\alpha c}$ and $(1 - \alpha) g \in \mathcal{L}_{(1 - \alpha)c}$.
+    Let $f, g \in \mathcal{L}_c$ and let $\alpha \in [0, 1]$.
+    We need to show that the convex combination $\alpha f + (1 - \alpha) g$ is
+    also in $\mathcal{L}_c$.
+
+    Since $\alpha \geq 0$, by Theorem~\ref{thm:constant_nonneg_multiplication},
+    we have $\alpha f \in \mathcal{L}_{\alpha c}$.
+    Similarly, as $(1 - \alpha) \geq 0$, $(1 - \alpha) g \in \mathcal{L}_{(1 - \alpha)c}$.
 
     Finally, by Theorem~\ref{thm:sum_pc_lipschitz},
     \begin{equation}
-        \alpha f + (1 - \alpha) g \in \mathcal{L}_{\alpha c + (1 - \alpha)c} = \mathcal{L}_c.
+        (\alpha f + (1 - \alpha) g) \in \mathcal{L}_{\alpha c + (1 - \alpha)c} = \mathcal{L}_c.
     \end{equation}
 \end{proof}
 
 \begin{corollary}
     Let $\mathcal{F}$ be a topological vector space of functions containing
-    $\mathcal{L}_c$, i.e. addition and scalar multiplication are continuous
-    operations.
-    Then $\mathcal{L}_c$ is a closed contractible subset of $\mathcal{F}$.
-    \todo{reference}
+    $\mathcal{L}_c$. Then $\mathcal{L}_c$ is a contractible subset of
+    $\mathcal{F}$~\cite{munkres2000topology}.
+\end{corollary}
+\begin{theorem}
+    The set $\mathcal{L}_c$ is closed in the topology of pointwise convergence.
+\end{theorem}
+\begin{proof}
+    Let $\{f^n\}_{n = 1}^\infty$ be a sequence of functions in $\mathcal{L}_c$
+    that converges pointwise to a function $f$. We need to show that $f$
+    is also in $\mathcal{L}_c$.
+    We have:
+    \begin{align}
+        \norm{f_P - f_Q}_\infty & \leq \norm{f_P - f^n_P}_\infty + \norm{f^n_P - f^n_Q}_\infty + \norm{f^n_Q - f_Q}_\infty \\
+        & \leq \norm{f_P - f^n_P}_\infty + c \cdot d_H(P, Q) + \norm{f^n_Q - f_Q}_\infty,
+    \end{align}
+    which converges to $c \cdot d_H(P, Q)$ and thus $f$ is $c$-PC-Lipschitz.    
+\end{proof}
+\begin{corollary}
+    Since uniform convergence and compact convergence are stronger topologies
+    than pointwise convergence, $\mathcal{L}_c$ is also closed in these topologies.
 \end{corollary}
 
 \section{The space of $c$-stable functions}
 
-As shown in various examples in Chapter~\ref{chap:operations},
-the $\mathcal{S}_c$ is not closed under addition or pointwise maximum or
-minimum. Nonetheless, we can still use scalar multiplication to prove
-contractibility:
+We now turn our attention to the larger space of all $c$-stable GDFs
+$\mathcal{S}_c$. As shown in various examples in Chapter~\ref{chap:operations},
+$\mathcal{S}_c$ lacks the well-behaved structure of $\mathcal{L}_c$: it is not
+closed under addition, pointwise maximum or pointwise minimum.
+
+Despite these limitations, $\mathcal{S}_c$ still possesses important topological
+properties.
+\begin{theorem}
+    The singleton set of the function $g(P, x) = 0$ is a strong deformation
+    retract of $\mathcal{S}_c$ in any topology on $\mathcal{F}$ where scalar
+    multiplication is continuous.
+\end{theorem}
+\begin{proof}
+    Let $f \in \mathcal{S}_c$.
+    We can define a homotopy $H_t(f)$ for $t \in [0, 1]$ as
+    \begin{equation}
+        H_t(f)(P, x) \coloneqq (1 - t)f(P, x)
+    \end{equation}
+    Then $H_0(f) = f$ and $H_1(f) = g$.
+    As $H_t(g) = g$, this deformation retraction is strong.
+\end{proof}
+\begin{corollary}
+    The set $\mathcal{S}_c \subseteq \mathcal{F}$ is contractible in any
+    topology on $\mathcal{F}$ where scalar multiplication is continuous.
+\end{corollary}
+
+The path constructed above shows that we can connect any function in
+$\mathcal{S}_c$ to the zero function by a continuous path, provided scalar
+multiplication is continuous. We can join two such paths to connect any two
+functions in $\mathcal{S}_c$:
 \begin{theorem}
     The set $\mathcal{S}_c \subseteq \mathcal{F}$ is path-connected in any
     topology on $\mathcal{F}$ where scalar multiplication is continuous.
@@ -84,63 +153,65 @@ contractibility:
             (2t - 1)g(P, x), & t \in (0.5, 1]
         \end{cases}
     \end{equation}
-    Then $h_t$ defines a path in $\mathcal{F}$ connecting $f$ and $g$.
-    As $1 - 2t \leq 1$ for $t \in [0, 0.5]$ and $2t - 1 \leq 1$ for $t \in (0.5, 1]$,
-    we have $h_t(P, x) \in \mathcal{S}_c$ for all $t \in [0, 1]$ by
-    Theorem~\ref{thm:constant_nonneg_multiplication}.
-    Thus, the path $h_t$ is entirely contained in $\mathcal{S}_c$.
+    This path starts at $h(0) = f$, passes through the zero function at $h(0.5) = 0$,
+    and ends at $h(1) = g$.
+
+    We now verify that $h_t(P, x) \in \mathcal{S}_c$ for all $t \in [0, 1]$.
+    For $t \in [0, 0.5]$, the scaling factor is $1 - 2t$, which lies in
+    $[0, 1]$, and by Theorem~\ref{thm:constant_nonneg_multiplication},
+    $h_t$ is in $\mathcal{S}_c$ for $t \in [0, 0.5]$.
+    Similarly, for $t \in (0.5, 1]$, the scaling factor is $2t - 1$, which also
+    lies in $[0, 1]$ and thus the whole path $h_t$ is in $\mathcal{S}_c$.
 \end{proof}
-\begin{corollary}
-    The set $\mathcal{S}_c \subseteq \mathcal{F}$ is contractible in any
-    topology on $\mathcal{F}$ where scalar multiplication is continuous.
-\end{corollary}
 
 \begin{theorem}
-    The singleton set of the function $g(P, x) = 0$ is a strong deformation
-    retract of $\mathcal{S}_c$ in any topology on $\mathcal{F}$ where scalar
-    multiplication is continuous.
+    The set $\mathcal{S}_c$ is closed in the topology of uniform convergence.
 \end{theorem}
 \begin{proof}
-    Let $f \in \mathcal{S}_c$.
-    We can define a homotopy $H_t(f)$ for $t \in [0, 1]$ as
-    \begin{equation}
-        H_t(f)(P, x) \coloneqq (1 - t)f(P, x)
-    \end{equation}
-    Then $H_0(f) = f$ and $H_1(f) = 0$.
-    As $H_t(g) = g$, this deformation retraction is strong.
-\end{proof}
-\begin{corollary}
-    The set $\mathcal{S}_c \subseteq \mathcal{F}$ is contractible in any
-    topology on $\mathcal{F}$ where scalar multiplication is continuous.
-\end{corollary}
+    Let $\{f^n\}_{n = 1}^\infty$ be a sequence of functions in $\mathcal{S}_c$
+    that converges uniformly to a function $f$, that is, $\norm{f - f^n}_\infty \to 0$.
+    We need to show that $f$ is also in $\mathcal{S}_c$.
 
-\begin{theorem}
-    The set $\mathcal{S}_c$ is closed in the topology of pointwise convergence.
-\end{theorem}
-\begin{proof}
-    Let $f^n \to f$ be a converging sequence of functions in $\mathcal{S}_c$.
-    We need to show that $f \in \mathcal{S}_c$.
-    We have:
+    For any finite sets $P, Q \subseteq \R$, by the triangle inequality, we have:
     \begin{align}
-        \norm{f_P - f_Q}_\infty & \leq \norm{f_P - f^n_P}_\infty + \norm{f^n_P - f^n_Q}_\infty + \norm{f^n_Q - f_Q}_\infty \\
+        d_b(\dgm_k(f_P), \dgm_k(f_Q)) & \leq d_b(\dgm_k(f_P), \dgm_k(f^n_P)) +{} \nonumber\\
+        & \qquad d_b(\dgm_k(f^n_P), \dgm_k(f^n_Q)) +{} \nonumber\\
+        & \qquad d_b(\dgm_k(f^n_Q), \dgm_k(f_Q)) \\
         & \leq \norm{f_P - f^n_P}_\infty + c \cdot d_H(P, Q) + \norm{f^n_Q - f_Q}_\infty,
     \end{align}
-    which converges to $c \cdot d_H(P, Q)$ and thus $f$ is $c$-stable.
+    which converges to $c \cdot d_H(P, Q)$ as $n \to \infty$.
+    Thus, $f$ is $c$-stable.
 \end{proof}
 
 \section{The relationship between $\mathcal{S}_c$ and $\mathcal{L}_c$}
 
-As $\mathcal{S}_c$ is much more well behaved than $\mathcal{L}_c$,
-it would be desirable to have $\mathcal{S}_c$ dense in $\mathcal{L}_c$.
-However, as both $\mathcal{S}_c$ is closed in any TVS, $\mathcal{S}_c$ is
-unfortunately not dense in $\mathcal{L}_c$ in such topologies.
-Even stronger, $\mathcal{S}_c$ is ``of measure zero'' in $\mathcal{L}_c$
-in the sense that it is shy.
-\begin{theorem}
-    The set $\mathcal{S}_c$ is shy in $\mathcal{L}_c$.
-\end{theorem}
-\begin{proof}
-    \todo{Consider arbitrary $f \in \mathcal{S}_c$ and its neighbourhood $N$.
-    Find a function $g \in N$ such that $g \mathcal{L}_s \setminus \mathcal{S}_c$
-    by adding a small non-Lipschitz bump to $f$.}
-\end{proof}
+As $\mathcal{L}_c$ is much more well-behaved than $\mathcal{S}_c$,
+it would be desirable to have $\mathcal{L}_c$ dense in $\mathcal{S}_c$.
+However, as $\mathcal{L}_c$ is closed in the topologies of uniform convergence,
+of compact convergence and of pointwise convergence, $\mathcal{L}_c$ is
+unfortunately not dense in $\mathcal{S}_c$ in these topologies.
+
+A possible direction for further investigation is to consider the notion of
+\emph{shyness}~\cite{ott2005prevalence}, which generalises the concept of
+measure zero to infinite-dimensional spaces. This concept allows us to
+ask: is the ``usual'' stable function also PC-Lipschitz?
+
+% An alternative approach would be to consider the notion of shyness,
+% which is a generalization of the concept of being of measure zero to
+% infinite-dimensional spaces. For a thorough introduction to shyness,
+% we refer the reader to the work of William Ott and James A.
+% Yorke~\cite{ott2005prevalence}.
+% \begin{theorem}
+%     The set $\mathcal{L}_c$ is shy in $\mathcal{S}_c$ in the topologies of
+%     uniform convergence, compact convergence and pointwise convergence.
+% \end{theorem}
+% \begin{proof}
+%     We will show that $\mathcal{L}_c$ has no interior points, i.e. for every
+%     $f \in \mathcal{L}_c$ and every neighbourhood $N$ of $f$, there exists a
+%     function $g \in N$ such that $g \notin \mathcal{L}_c$, but $g \in \mathcal{S}_c$.
+%     This implies that $\mathcal{L}_c$ is shy in $\mathcal{S}_c$~\cite{ott2005prevalence}.
+    
+%     \todo{Consider arbitrary $f \in \mathcal{L}_c$ and its neighbourhood $N$.
+%     Find a function $g \in N$ such that $g \in \mathcal{S}_c \setminus \mathcal{L}_c$
+%     by adding a small non-Lipschitz bump to $f$.}
+% \end{proof}

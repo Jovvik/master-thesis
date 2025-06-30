@@ -380,6 +380,8 @@ as any isotropic kernel $h(x, p) = k(d(x, p))$ with $k$ being $c$-Lipschitz
 automatically is $c$-Lipschitz with respect to $p$. This follows because the
 distance function is 1-Lipschitz, and composing it with a $c$-Lipschitz function
 yields a $c$-Lipschitz function~\cite{weaver2018lipschitz}.
+Nonetheless, we included the less general case of
+Theorem~\ref{thm:stable_isotropic}, as many common kernels fit these conditions.
 
 The $q$-tameness condition for the induced persistence modules, while crucial,
 is not always straightforward to verify directly for a given kernel $h$. In the
@@ -450,6 +452,7 @@ $P$:
 \end{example}
 We prove two theorems that guarantee stability of such GDFs.
 \begin{theorem}
+    \label{thm:pc_kernel_stability}
     Let $h : \R^d \times \R^d \times \mathcal{P}(\R^d) \to \R$ be a kernel that
     is $c$-Lipschitz continuous with respect to its second argument (the point
     $P$) and $d$-Lipschitz continuous with respect to its third argument (the
